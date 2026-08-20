@@ -1,0 +1,302 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    @template local_completionpage/completion_page
+
+    Course completion celebration page for learners.
+
+    Example context (json):
+    {
+        "showmessage": true,
+        "headlinehtml": "<h1 class=\"fw-bold mb-2\">🎉 Course <span class=\"text-primary\">Completed!</span></h1>",
+        "messagehtml": "<p class=\"text-muted mb-3\">Congratulations!</p>",
+        "coursename": "Digital Literacy",
+        "showexit": true
+    }
+}}
+<div class="local-completionpage">
+    {{#showmessage}}
+    <section class="local-completionpage__card local-completionpage__hero">
+        <div class="local-completionpage__hero-inner">
+            <div class="local-completionpage__hero-content">
+                <div class="local-completionpage__headline">{{{headlinehtml}}}</div>
+                <div class="local-completionpage__message">{{{messagehtml}}}</div>
+                <div class="local-completionpage__meta-panel">
+                    <div class="local-completionpage__meta-col">
+                        <span class="local-completionpage__meta-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="5" width="18" height="16" rx="2"/>
+                                <path d="M3 10h18"/>
+                                <path d="M8 3v4"/>
+                                <path d="M16 3v4"/>
+                            </svg>
+                        </span>
+                        <div>
+                            <div class="local-completionpage__meta-label">{{courselabel}}</div>
+                            <div class="local-completionpage__meta-value">{{coursename}}</div>
+                        </div>
+                    </div>
+                    {{#hascompletedon}}
+                    <div class="local-completionpage__meta-divider" aria-hidden="true"></div>
+                    <div class="local-completionpage__meta-col">
+                        <span class="local-completionpage__meta-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="5" width="18" height="16" rx="2"/>
+                                <path d="M3 10h18"/>
+                                <path d="M8 3v4"/>
+                                <path d="M16 3v4"/>
+                            </svg>
+                        </span>
+                        <div>
+                            <div class="local-completionpage__meta-label">{{completedonlabel}}</div>
+                            <div class="local-completionpage__meta-value">{{completedon}}</div>
+                        </div>
+                    </div>
+                    {{/hascompletedon}}
+                </div>
+                <p class="local-completionpage__requirements">
+                    <span class="local-completionpage__req-check" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 12.5l5 5L19 7"/>
+                        </svg>
+                    </span>
+                    {{requirementsmet}}
+                </p>
+            </div>
+        </div>
+    </section>
+    {{/showmessage}}
+
+    {{#showcertificates}}
+    <section class="local-completionpage__card local-completionpage__section local-completionpage__section--certificates">
+        <div class="local-completionpage__section-head">
+            <span class="local-completionpage__section-icon local-completionpage__section-icon--primary" aria-hidden="true">
+                {{! Award rosette / ribbon — matches mockup }}
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="9.5" r="5.25"/>
+                    <circle cx="12" cy="9.5" r="2.1"/>
+                    <path d="M9.2 14.2L8 21l4-2.2L16 21l-1.2-6.8"/>
+                </svg>
+            </span>
+            <div>
+                <h3 class="local-completionpage__section-title">{{certificatesheading}}</h3>
+                <p class="local-completionpage__section-desc">{{certificatesdesc}}</p>
+            </div>
+        </div>
+        <div class="local-completionpage__cert-stack">
+            {{#certificates}}
+            <div class="local-completionpage__cert-layout">
+                <div class="local-completionpage__cert-actions">
+                    <a class="local-completionpage__btn local-completionpage__btn--primary local-completionpage__btn--download" href="{{downloadurl}}">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M12 3v12"/>
+                            <path d="M7 11l5 5 5-5"/>
+                            <path d="M5 21h14"/>
+                        </svg>
+                        <span>{{downloadlabel}}</span>
+                    </a>
+                    <a class="local-completionpage__btn local-completionpage__btn--ghost local-completionpage__btn--preview" href="{{previewurl}}" target="_blank" rel="noopener">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/>
+                            <circle cx="12" cy="12" r="3"/>
+                        </svg>
+                        <span>{{previewlabel}}</span>
+                    </a>
+                </div>
+                <div class="local-completionpage__cert-preview-wrap">
+                    {{#haspdfpreview}}
+                    <div class="local-completionpage__cert-preview local-completionpage__cert-preview--pdf">
+                        <div class="local-completionpage__cert-frame-shell">
+                            <iframe
+                                class="local-completionpage__cert-frame"
+                                src="{{previewurl}}#toolbar=0&navpanes=0&scrollbar=0&statusbar=0&messages=0&view=FitH"
+                                title="{{name}}"
+                                loading="lazy"
+                                scrolling="no"
+                            ></iframe>
+                        </div>
+                    </div>
+                    {{/haspdfpreview}}
+                    {{^haspdfpreview}}
+                    <div class="local-completionpage__cert-preview" aria-hidden="true">
+                        <div class="local-completionpage__cert-preview-border">
+                            <div class="local-completionpage__cert-preview-eyebrow">{{certificateoftitle}}</div>
+                            <div class="local-completionpage__cert-preview-label">{{certificatepresentedto}}</div>
+                            <div class="local-completionpage__cert-preview-recipient">{{recipient}}</div>
+                            <div class="local-completionpage__cert-preview-course">{{coursename}}</div>
+                            {{#hasissuedon}}
+                            <div class="local-completionpage__cert-preview-date">{{issuedon}}</div>
+                            {{/hasissuedon}}
+                            <div class="local-completionpage__cert-preview-seal"></div>
+                        </div>
+                    </div>
+                    {{/haspdfpreview}}
+                </div>
+            </div>
+            {{/certificates}}
+        </div>
+    </section>
+    {{/showcertificates}}
+
+    {{#showachievements}}
+    <section class="local-completionpage__card local-completionpage__section local-completionpage__section--achievements">
+        <div class="local-completionpage__section-head">
+            <span class="local-completionpage__section-icon local-completionpage__section-icon--primary" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 21h8"/><path d="M12 17v4"/><path d="M7 4h10v5a5 5 0 01-10 0V4z"/><path d="M7 6H4a2 2 0 00-2 2v1a4 4 0 004 4"/><path d="M17 6h3a2 2 0 012 2v1a4 4 0 01-4 4"/></svg>
+            </span>
+            <div>
+                <h3 class="local-completionpage__section-title">{{achievementsheading}}</h3>
+                <p class="local-completionpage__section-desc">{{achievementsdesc}}</p>
+            </div>
+        </div>
+
+        <div class="local-completionpage__meta-grid local-completionpage__meta-grid--tight">
+            {{#showcompletedon}}
+            <div class="local-completionpage__meta-box">
+                <span class="local-completionpage__meta-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 3v4"/><path d="M16 3v4"/></svg>
+                </span>
+                <div>
+                    <div class="local-completionpage__meta-label">{{completedonlabel}}</div>
+                    <div class="local-completionpage__meta-value">{{completedon}}</div>
+                </div>
+            </div>
+            {{/showcompletedon}}
+            {{#hasgrade}}
+            <div class="local-completionpage__meta-box">
+                <span class="local-completionpage__meta-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19h16"/><path d="M7 19V9"/><path d="M12 19V5"/><path d="M17 19v-7"/></svg>
+                </span>
+                <div>
+                    <div class="local-completionpage__meta-label">{{gradelabel}}</div>
+                    <div class="local-completionpage__meta-value">{{grade}}</div>
+                </div>
+            </div>
+            {{/hasgrade}}
+            {{#hastimespent}}
+            <div class="local-completionpage__meta-box">
+                <span class="local-completionpage__meta-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                </span>
+                <div>
+                    <div class="local-completionpage__meta-label">{{timespentlabel}}</div>
+                    <div class="local-completionpage__meta-value">{{timespent}}</div>
+                </div>
+            </div>
+            {{/hastimespent}}
+        </div>
+
+        {{#hasbadges}}
+        <h4 class="local-completionpage__subsection-title">{{badgesheading}}</h4>
+        <div class="local-completionpage__badge-grid">
+            {{#badges}}
+            <div class="local-completionpage__badge-card">
+                <img src="{{imageurl}}" alt="" class="local-completionpage__badge-image">
+                <div>
+                    <div class="local-completionpage__badge-name">{{name}}</div>
+                    {{#hasdate}}
+                    <div class="local-completionpage__badge-date">{{dateissued}}</div>
+                    {{/hasdate}}
+                </div>
+            </div>
+            {{/badges}}
+        </div>
+        {{/hasbadges}}
+    </section>
+    {{/showachievements}}
+
+    {{#showfeedback}}
+    <section class="local-completionpage__card local-completionpage__section local-completionpage__section--feedback">
+        <div class="local-completionpage__section-head">
+            <span class="local-completionpage__section-icon local-completionpage__section-icon--primary" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                    <path d="M12 2.6l2.7 5.5 6.1.9-4.4 4.3 1 6.1L12 16.9 6.6 19.4l1-6.1L3.2 9l6.1-.9L12 2.6z"/>
+                </svg>
+            </span>
+            <div>
+                <h3 class="local-completionpage__section-title">{{feedbackheading}}</h3>
+                <p class="local-completionpage__section-desc">{{feedbackdesc}}</p>
+            </div>
+        </div>
+        {{#alreadysubmitted}}
+        <div class="local-completionpage__feedback-thanks">{{feedbackthanks}}</div>
+        {{/alreadysubmitted}}
+        {{^alreadysubmitted}}
+        <div class="local-completionpage__feedback-cta">
+            <p class="local-completionpage__feedback-ctahint">{{feedbackctahint}}</p>
+            {{#feedbackname}}
+            <p class="local-completionpage__feedback-activity">{{feedbackactivitylabel}}: <strong>{{feedbackname}}</strong></p>
+            {{/feedbackname}}
+            <div class="local-completionpage__feedback-actions">
+                <a class="local-completionpage__btn local-completionpage__btn--primary" href="{{feedbackurl}}">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M22 2L11 13"/>
+                        <path d="M22 2l-7 20-4-9-9-4 20-7z"/>
+                    </svg>
+                    {{givefeedbacklabel}}
+                </a>
+            </div>
+        </div>
+        {{/alreadysubmitted}}
+    </section>
+    {{/showfeedback}}
+
+    {{#showsuggested}}
+    <section class="local-completionpage__card local-completionpage__section local-completionpage__section--suggested">
+        <div class="local-completionpage__section-head local-completionpage__section-head--split">
+            <div class="local-completionpage__section-head-main">
+                <span class="local-completionpage__section-icon local-completionpage__section-icon--primary" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4.5 19.5l5-1.5 9.5-9.5a2.1 2.1 0 00-3-3L6.5 15l-2 4.5z"/>
+                        <path d="M14 5l5 5"/>
+                        <path d="M9 15l-4 4"/>
+                    </svg>
+                </span>
+                <div>
+                    <h3 class="local-completionpage__section-title">{{suggestedheading}}</h3>
+                    <p class="local-completionpage__section-desc">{{suggesteddesc}}</p>
+                </div>
+            </div>
+            <a class="local-completionpage__btn local-completionpage__btn--ghost local-completionpage__btn--browse" href="{{browseallurl}}">
+                {{browsealllabel}}
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M5 12h14"/>
+                    <path d="M13 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </div>
+        <div class="catalog-items-container grid">
+            <div class="catalog-items local-completionpage__related">
+                {{#courses}}
+                    {{> local_completionpage/course_card }}
+                {{/courses}}
+            </div>
+        </div>
+    </section>
+    {{/showsuggested}}
+
+    {{#showexit}}
+    <nav class="local-completionpage__exit-row" aria-label="{{exitnavlabel}}">
+        {{#exitoptions}}
+        <a class="local-completionpage__exit-link" href="{{url}}">
+            <span class="local-completionpage__exit-icon" aria-hidden="true">{{{iconsvg}}}</span>
+            <span class="local-completionpage__exit-text">
+                <span class="local-completionpage__exit-title">{{title}}</span>
+                <span class="local-completionpage__exit-desc">{{description}}</span>
+            </span>
+        </a>
+        {{/exitoptions}}
+    </nav>
+    {{/showexit}}
+
+    <div class="local-completionpage__footer">
+        <span class="local-completionpage__footer-icon" aria-hidden="true">🏆</span>
+        <span class="local-completionpage__footer-text">{{footerencouragement}}</span>
+        <span class="local-completionpage__footer-heart" aria-hidden="true">❤️</span>
+    </div>
+</div>

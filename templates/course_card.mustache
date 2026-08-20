@@ -1,0 +1,136 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    @template local_completionpage/course_card
+
+    Catalog course card (theme_learner/course_card), with quoted image src.
+
+    Example context (json):
+    {
+        "url": "https://example.com/course/view.php?id=1",
+        "imgurl": "https://example.com/pluginfile.php/1/course/overviewfiles/intro.jpg",
+        "name": "Introduction to Moodle",
+        "categoryname": "Online Courses",
+        "isenrolled": true,
+        "button": {
+            "url": "https://example.com/course/view.php?id=1",
+            "label": "View Course"
+        }
+    }
+}}
+<div class="learner_course_card">
+    <div class="learner-course-card-content border-0">
+        <a href="{{{url}}}" class="text-decoration-none">
+            <div class="learner_course_card_img{{^imgurl}} frontpage-course-img-empty{{/imgurl}}">
+                {{#imgurl}}<img src="{{{imgurl}}}" alt="{{name}}" />{{/imgurl}}
+                {{^imgurl}}<i class="fa-regular fa-image"></i>{{/imgurl}}
+            </div>
+        </a>
+
+        <div class="learner_course_card-body">
+            <div class="learner_course_card_text">
+                {{categoryname}}
+            </div>
+
+            <div class="learner_course_card_heading">
+                <a href="{{{url}}}">
+                    {{name}}
+                </a>
+            </div>
+
+            <div class="learner_course_card_price">
+                {{#ecommerce}}
+                    {{#mainprice}}
+                        <div class="d-inline-block learner_course_card_price_main ecommece-selected-option">
+                            {{mainprice}}
+                        </div>
+                    {{/mainprice}}
+                    {{#discountprice}}
+                        <div class="d-inline-block learner_course_card_price_discount text-muted">
+                            {{discountprice}}
+                        </div>
+                    {{/discountprice}}
+                {{/ecommerce}}
+            </div>
+        </div>
+
+        {{#isenrolled}}
+        <div class="learner_course_card_footer">
+            {{#expirywarning}}
+                <p class="mb-0 have_expiry text-bg-red badge rounded-pill">
+                    {{expirywarning}}
+                </p>
+            {{/expirywarning}}
+            {{^expirywarning}}
+                <p class="mb-0 have_access badge text-bg-green rounded-pill">
+                    {{#str}}have_access, theme_learner{{/str}}
+                </p>
+            {{/expirywarning}}
+                    <a href="{{{url}}}" class="btn btn-course-card w-100 rounded-2 fw-bold" target="_blank">
+                <span>{{#str}}view_course, theme_learner{{/str}}</span>
+                <span class="ms-2"><i class="fa fa-chevron-right"></i></span>
+            </a>
+            <div class="clear"></div>
+        </div>
+        {{/isenrolled}}
+
+        {{^isenrolled}}
+        {{#button}}
+        <div class="learner_course_card_footer">
+            <a href="{{{url}}}" class="btn btn-course-card w-100 rounded-2 fw-bold" target="_blank">
+                <span>{{label}}</span>
+                <span class="ms-2"><i class="fa fa-chevron-right"></i></span>
+            </a>
+            <div class="clear"></div>
+        </div>
+        {{/button}}
+        {{/isenrolled}}
+
+        {{^isenrolled}}
+        {{#ecommerce}}
+        <div class="learner_course_card_footer">
+            {{^fullybooked}}
+                <form action="{{{addtocarturl}}}" method="post" class="form-container mb-0 w-100">
+                    {{#multioptions}}
+                        <select name="price" class="form-control mb-3 price-select-option">
+                            <option value="" data-price="{{{mainprice}}}">
+                                {{#str}}choose_option, enrol_ecommerce{{/str}}
+                            </option>
+                            {{#priceoptions}}
+                                <option value="{{value}}" data-price="{{{price}}}">
+                                    {{name}}
+                                </option>
+                            {{/priceoptions}}
+                        </select>
+                    {{/multioptions}}
+                    {{^multioptions}}
+                        {{#priceoptions}}
+                            <input type="hidden" name="price" value="{{value}}">
+                        {{/priceoptions}}
+                    {{/multioptions}}
+                    <input type="hidden" name="action" value="add">
+                    <input type="hidden" name="hash" value="{{hash}}">
+                    <input type="hidden" name="course" value="{{courseid}}">
+                    <input type="hidden" name="type" value="{{type}}">
+                    <button type="submit" class="btn btn-add-to-cart btn-course-card w-100 rounded-2 fw-bold">
+                        {{#addtocartlabel}}<span>{{addtocartlabel}}</span>{{/addtocartlabel}}
+                        {{^addtocartlabel}}<span>{{#str}}add_to_cart, theme_learner{{/str}}</span>{{/addtocartlabel}}
+                        <span class="ms-2"><i class="fa fa-chevron-right"></i></span>
+                    </button>
+                </form>
+            {{/fullybooked}}
+            {{#fullybooked}}
+                <button disabled class="btn btn-add-to-cart btn-course-card w-100 rounded-2 fw-bold">
+                    <span>{{#str}}btn_fully_booked, enrol_ecommerce{{/str}}</span>
+                </button>
+            {{/fullybooked}}
+        </div>
+        {{/ecommerce}}
+        {{/isenrolled}}
+    </div>
+</div>

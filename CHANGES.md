@@ -1,0 +1,260 @@
+# Changelog
+
+All notable changes to the Course Completion Page plugin are documented here.
+
+## 1.2.28 - 2026-08-19
+
+### Changed
+
+- Custom headline and message editors now support embedded images and media with
+  the file picker (same draft-area pattern as local_slmscustomemail).
+
+## 1.2.24 - 2026-08-17
+
+### Fixed
+
+- HTML editor preview for completion message fields: learner and slms_admin themes
+  no longer override editor CSS with a missing `editor.scss`; they inherit Boost
+  editor styles so Bootstrap classes (text-primary, text-muted) render in TinyMCE.
+
+## 1.2.23 - 2026-08-17
+
+### Changed
+
+- Default headline and message editor HTML now uses Bootstrap utility classes
+  (fw-bold, text-primary, text-muted) instead of plugin-specific CSS classes, so
+  styling preview matches in the HTML editor and on the completion page.
+
+## 1.2.22 - 2026-08-17
+
+### Changed
+
+- Custom completion headline and message are HTML editor fields pre-filled with the
+  default styled title and congratulations subtitle. Empty or default content
+  falls back to the standard completion page markup on display.
+
+## 1.2.21 - 2026-08-17
+
+### Changed
+
+- Shared `section_*_help` and `enable_help` language strings are used on both the
+  site admin settings page and the course settings form. Course settings add a
+  brief intro explaining inherit/override behaviour.
+
+## 1.2.20 - 2026-08-17
+
+### Changed
+
+- Custom completion message replaces the default congratulations text when set,
+  instead of appearing below it.
+
+## 1.2.19 - 2026-08-17
+
+### Changed
+
+- Site admin settings: added descriptions for all section default toggles; Exit
+  options is listed last (after Achievements), matching the course settings form.
+
+## 1.2.18 - 2026-08-17
+
+### Changed
+
+- Course settings form reorganised per review feedback: section toggles act as
+  parents for related fields (custom message, feedback link, suggested courses),
+  dependent fields hide when a section is disabled, Exit options is last, and
+  help icons were added for all course completion page fields.
+
+## 1.2.17 - 2026-08-17
+
+### Changed
+
+- Finish button on the last activity uses the same link style as Previous/Next
+  navigation (not a primary button).
+
+## 1.2.16 - 2026-08-17
+
+### Changed
+
+- Achievements stat boxes and badge cards use the same neutral grey surface
+  (`#f3f4f6`) as the hero meta panel, instead of blue-tinted backgrounds.
+
+## 1.2.15 - 2026-08-17
+
+### Changed
+
+- Removed **Redirect on completion**. Learners are no longer sent automatically
+  to the completion page when they finish or revisit the course home.
+- Added a **Finish** button on activity navigation (right side) on the **last
+  activity**, shown when the completion page is enabled and the learner has met
+  course completion criteria.
+- Site admin settings: removed redirect toggle; section defaults use their own
+  heading instead of duplicating the page title.
+
+### Removed
+
+- Automatic redirect on course completion and on course home visit.
+- Per-course “Redirect on completion” override.
+
+## 1.2.14 - 2026-08-17
+
+### Changed
+
+- Linked Feedback activity is optional. When left on Auto, the completion page
+  uses the first visible Feedback activity in the course. The dropdown remains
+  as an override when a course has multiple Feedback activities.
+
+## 1.2.13 - 2026-08-17
+
+### Changed
+
+- Achievements omit missing items entirely (no “not available” / “no badges”
+  empty-state messages). Only real grade, time spent, badges, and completion
+  date values are shown.
+
+## 1.2.12 - 2026-08-17
+
+### Fixed
+
+- Feedback section no longer looks like an on-page rating form. Fake stars/comment
+  fields are replaced with a clear CTA that opens the linked Feedback activity,
+  where students submit their answers.
+
+### Changed
+
+- Achievements section surfaces completion date, course grade, time spent, and
+  badges when values exist. Site badges are included alongside course badges.
+
+## 1.2.11 - 2026-08-17
+
+### Fixed
+
+- Feedback section never appeared because visibility was checked via `$cm->uservisible`
+  on a `get_coursemodule_from_id()` record (that property is only set on `cm_info`).
+  Visibility is now resolved through `get_fast_modinfo()`.
+
+## 1.2.10 - 2026-08-17
+
+### Changed
+
+- Removed the duplicate page heading (“Course completed”); the first section title is the only heading.
+
+## 1.2.9 - 2026-08-17
+
+### Fixed
+
+- Certificate section is hidden when the certificate activity is hidden (or otherwise not
+  visible to the learner). Issued certs from non-visible course modules are omitted.
+
+## 1.2.8 - 2026-08-17
+
+### Changed
+
+- Course administration **Course Completion Page** link now opens advanced course settings
+  (`/course/edit.php?…&advanced=1`) instead of the simplified `setting.php` screen, and
+  scrolls to the Course Completion Page section.
+
+## 1.2.7 - 2026-08-14
+
+### Fixed
+
+- Achievements time spent now respects the course **Show time spent** setting
+  (`showtimespent`). When that option is off, time spent is hidden on the completion page.
+
+## 1.2.6 - 2026-08-14
+
+### Fixed
+
+- Suggested course card enrol / add-to-cart buttons now match the homepage catalog:
+  ecommerce cart handlers are loaded, and enrol CTA data is merged the same way as
+  frontpage course cards.
+
+## 1.2.5 - 2026-08-14
+
+### Changed
+
+- Completion page accents now follow the theme primary colour instead of a hardcoded green palette.
+- Certificate actions are stacked in two rows; share and “preview full certificate” were removed.
+- Suggested courses uses a searchable course picker in course settings, and falls back to the same category when none are selected.
+
+### Fixed
+
+- Certificate section stays hidden when the learner has no issued certificate.
+- Large hero check icon removed from the completion message card.
+
+## 1.2.4 - 2026-08-14
+
+### Fixed
+
+- Certificate preview/download no longer hits the hidden Custom certificate activity page
+  (`Sorry, this activity is currently hidden`). Issued PDFs are served via Custom cert’s
+  my-certificates download URL, which still works when the activity is hidden on the course.
+
+## 1.2.3 - 2026-08-10
+
+### Changed
+
+- Declared a hard dependency on `local_timespent` (`>= 2026081001`) for achievements time spent.
+
+## 1.2.2 - 2026-08-04
+
+### Fixed
+
+- Completion redirect now uses `before_course_viewed` (same hook as core external course redirects) so completed learners are sent to the completion page when opening the course home.
+
+## 1.2.1 - 2026-08-04
+
+### Changed
+
+- Time spent now supports only two selectable sources (site setting):
+  - `local_timespent` (default, recommended)
+  - Standard logs (`logstore_standard`) session-gap estimate
+- Removed `local_timetracker` and `block_dedication` auto-detection.
+- Settings page recommends installing `local_timespent` when it is not available.
+
+## 1.2.0 - 2026-08-04
+
+### Added
+
+- Marketplace packaging: full GPLv3 `LICENSE`, `CHANGES.md`, `thirdpartylibs.xml`, and GitHub Actions CI scaffold.
+- `$plugin->supported` for Moodle 4.5–5.2 and `MATURITY_STABLE` release metadata.
+- Achievements section (course grade, badges, optional time spent via soft plugin detection).
+- Certificate preview and share helpers for issued certificates.
+- MooPlugins product documentation and README.
+
+### Changed
+
+- Privacy API uses `null_provider` (plugin stores course settings only; no learner personal data).
+- Soft-guard when `mod_feedback` is missing or disabled.
+- Learner-facing strings moved fully into the English language pack.
+
+### Fixed
+
+- Course progress percentage is not treated as course completion (gate uses Moodle course completion only).
+
+## 1.1.2 - 2026-07-30
+
+### Changed
+
+- Certificate preview styling (removed gold ornamental frame; softened PDF viewer chrome).
+
+## 1.1.1 - 2026-07-30
+
+### Changed
+
+- Suggested courses, feedback, exit, and footer UI aligned to product mockup.
+
+## 1.1.0 - 2026-07-30
+
+### Added
+
+- Achievements section with grade, badges, and soft time-spent detection.
+
+## 1.0.0 - 2026-07-30
+
+### Added
+
+- Initial Course Completion Page for Moodle.
+- Site defaults and per-course settings (inherit / enable / disable).
+- Completion message, certificates, feedback CTA (`mod_feedback`), suggested courses, and exit actions.
+- Soft detection for `customcert`, `coursecertificate`, and `simplecertificate`.
+- Optional redirect on course completion.

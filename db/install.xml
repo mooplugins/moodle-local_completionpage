@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="local/completionpage/db" VERSION="20250730" COMMENT="Course Completion Page per-course settings"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd">
+  <TABLES>
+    <TABLE NAME="local_completionpage_course" COMMENT="Per-course completion page configuration">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="enabled" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="-1" SEQUENCE="false" COMMENT="-1 inherit, 0 off, 1 on"/>
+        <FIELD NAME="redirectoverride" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="-1" SEQUENCE="false"/>
+        <FIELD NAME="customheadline" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="custommessage" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="feedbackcmid" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="suggestedcourses" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Comma-separated course IDs"/>
+        <FIELD NAME="sectionmessage" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="-1" SEQUENCE="false"/>
+        <FIELD NAME="sectioncertificates" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="-1" SEQUENCE="false"/>
+        <FIELD NAME="sectionfeedback" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="-1" SEQUENCE="false"/>
+        <FIELD NAME="sectionsuggested" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="-1" SEQUENCE="false"/>
+        <FIELD NAME="sectionexit" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="-1" SEQUENCE="false"/>
+        <FIELD NAME="sectionachievements" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="-1" SEQUENCE="false"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="courseid" TYPE="foreign" FIELDS="courseid" REFTABLE="course" REFFIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="courseid-unique" UNIQUE="true" FIELDS="courseid"/>
+      </INDEXES>
+    </TABLE>
+  </TABLES>
+</XMLDB>
