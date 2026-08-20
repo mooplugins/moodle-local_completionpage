@@ -36,6 +36,10 @@ class customcert_provider implements provider_interface {
     public function is_available(): bool {
         global $DB;
 
+        if (!\local_completionpage\service\optional_integrations::is_plugin_installed_and_enabled('mod_customcert')) {
+            return false;
+        }
+
         return $DB->get_manager()->table_exists('customcert_issues')
             && $DB->get_manager()->table_exists('customcert');
     }

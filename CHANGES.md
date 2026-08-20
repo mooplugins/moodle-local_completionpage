@@ -2,20 +2,45 @@
 
 All notable changes to the Course Completion Page plugin are documented here.
 
+## 1.2.30 - 2026-08-20
+
+### Added
+
+- `pix/image_placeholder.svg` for suggested course cards when a course has no overview
+  image.
+- Self-contained suggested course card styles in `styles.css`.
+
+### Changed
+
+- Suggested course cards show the bundled placeholder icon instead of Font Awesome or a
+  generic JPEG fallback.
+- Optional integrations: `local_timespent`, `mod_customcert`, and ecommerce notice handling
+  (no hard `$plugin->dependencies`; time spent falls back to standard logs when Time spent
+  is not installed).
+
+## 1.2.29 - 2026-08-20
+
+### Fixed
+
+- PHPDoc for `suggested_courses::get_same_category_courseids()` (CI moodlecheck).
+- Moodle stylelint compliance in `styles.css` (removed `!important`, invalid `clamp()`,
+  long hex colours).
+- Mustache HTML validation in `course_card.mustache` (void element trailing slash).
+
 ## 1.2.28 - 2026-08-19
 
 ### Changed
 
 - Custom headline and message editors now support embedded images and media with
-  the file picker (same draft-area pattern as local_slmscustomemail).
+  the file picker (draft-area file handling for embedded content).
 
 ## 1.2.24 - 2026-08-17
 
 ### Fixed
 
-- HTML editor preview for completion message fields: learner and slms_admin themes
-  no longer override editor CSS with a missing `editor.scss`; they inherit Boost
-  editor styles so Bootstrap classes (text-primary, text-muted) render in TinyMCE.
+- HTML editor preview for completion message fields: themes that override editor
+  CSS without supplying `editor.scss` now inherit Boost editor styles so Bootstrap
+  classes (text-primary, text-muted) render in TinyMCE.
 
 ## 1.2.23 - 2026-08-17
 
@@ -193,7 +218,8 @@ All notable changes to the Course Completion Page plugin are documented here.
 
 ### Changed
 
-- Declared a hard dependency on `local_timespent` (`>= 2026081001`) for achievements time spent.
+- Added site setting to prefer `local_timespent` for achievements time spent when that
+  plugin is installed (optional; not a Moodle plugin dependency).
 
 ## 1.2.2 - 2026-08-04
 
@@ -208,7 +234,6 @@ All notable changes to the Course Completion Page plugin are documented here.
 - Time spent now supports only two selectable sources (site setting):
   - `local_timespent` (default, recommended)
   - Standard logs (`logstore_standard`) session-gap estimate
-- Removed `local_timetracker` and `block_dedication` auto-detection.
 - Settings page recommends installing `local_timespent` when it is not available.
 
 ## 1.2.0 - 2026-08-04

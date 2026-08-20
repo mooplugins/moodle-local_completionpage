@@ -50,12 +50,25 @@ if ($hassiteconfig) {
         1
     ));
 
-    $settings->add(new admin_setting_configcheckbox(
-        'local_completionpage/section_certificates',
-        get_string('settings_section_certificates', 'local_completionpage'),
-        get_string('section_certificates_help', 'local_completionpage'),
-        1
-    ));
+    if (\local_completionpage\service\optional_integrations::is_section_available('certificates')) {
+        $settings->add(new admin_setting_configcheckbox(
+            'local_completionpage/section_certificates',
+            get_string('settings_section_certificates', 'local_completionpage'),
+            get_string('section_certificates_help', 'local_completionpage'),
+            1
+        ));
+    } else {
+        $settings->add(new \local_completionpage\admin_setting\configcheckbox_unavailable(
+            'local_completionpage/section_certificates',
+            get_string('settings_section_certificates', 'local_completionpage'),
+            get_string('section_certificates_help', 'local_completionpage'),
+            '1',
+            \local_completionpage\service\optional_integrations::render_section_unavailable_notice(
+                get_string('integration_customcert_name', 'local_completionpage'),
+                \local_completionpage\service\optional_integrations::URL_CUSTOMCERT
+            )
+        ));
+    }
 
     $settings->add(new admin_setting_configcheckbox(
         'local_completionpage/section_feedback',
@@ -64,10 +77,13 @@ if ($hassiteconfig) {
         1
     ));
 
+    $suggesteddesc = get_string('section_suggested_help', 'local_completionpage');
+    $suggesteddesc .= \local_completionpage\service\optional_integrations::render_ecommerce_coming_soon_notice();
+
     $settings->add(new admin_setting_configcheckbox(
         'local_completionpage/section_suggested',
         get_string('settings_section_suggested', 'local_completionpage'),
-        get_string('section_suggested_help', 'local_completionpage'),
+        $suggesteddesc,
         1
     ));
 
@@ -95,12 +111,17 @@ if ($hassiteconfig) {
             get_string('settings_timespent_source_timespent', 'local_completionpage');
     }
 
+    $currenttimespent = get_config('local_completionpage', 'timespent_source');
+    if (
+        !$timespentavailable
+        && $currenttimespent === \local_completionpage\constants::TIMESPENT_SOURCE_TIMESPENT
+    ) {
+        set_config('timespent_source', \local_completionpage\constants::TIMESPENT_SOURCE_LOGS, 'local_completionpage');
+    }
+
     $timespentdesc = get_string('settings_timespent_source_desc', 'local_completionpage');
     if (!$timespentavailable) {
-        $timespentdesc .= \html_writer::div(
-            get_string('settings_timespent_recommend', 'local_completionpage'),
-            'alert alert-info mt-2 mb-0'
-        );
+        $timespentdesc .= '<br>' . get_string('settings_timespent_recommend', 'local_completionpage');
     }
 
     $timespentdefault = $timespentavailable

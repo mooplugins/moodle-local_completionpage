@@ -19,11 +19,7 @@ Shows a celebratory message with course name, completion date, and optional cust
 
 ### Certificates
 
-Detects issued certificates from popular certificate plugins when installed:
-
-- `mod_customcert`
-- `mod_coursecertificate` (with `tool_certificate`)
-- `mod_simplecertificate`
+Detects issued certificates from **Custom certificate** (`mod_customcert`) when installed.
 
 Learners can download and preview issued certificates. The section is hidden when nothing has been issued, or when the certificate activity is hidden from the learner.
 
@@ -34,7 +30,7 @@ Optionally shows:
 - Course grade (respects gradebook visibility)
 - Course badges
 - Time spent from a configurable source:
-  - **Time spent plugin** (`local_timespent`) — default (required dependency)
+  - **Time spent plugin** (`local_timespent`) — recommended when installed
   - **Standard logs** (`logstore_standard`) — session-gap estimate only
 
 Missing items are hidden automatically.
@@ -65,8 +61,9 @@ Suggest manually curated next courses, and provide exit links to Dashboard, My c
 
 | Integration | Required? | Purpose |
 |-------------|-----------|---------|
-| `mod_feedback` | Optional | Feedback CTA |
-| `mod_customcert` / `mod_coursecertificate` / `mod_simplecertificate` | Optional | Certificates |
+| `mod_feedback` | Optional (core) | Feedback CTA |
+| `mod_customcert` | Optional | Certificates |
+| `tool_ecommerce` | Optional | Prices / add-to-cart on suggested courses |
 | Core badges / gradebook | Optional | Achievements |
 | Standard logs (`logstore_standard`) | Built-in estimate option | Approximate time spent |
 

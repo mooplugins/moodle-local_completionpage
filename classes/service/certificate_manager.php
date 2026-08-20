@@ -24,10 +24,8 @@
 
 namespace local_completionpage\service;
 
-use local_completionpage\certificate\coursecertificate_provider;
 use local_completionpage\certificate\customcert_provider;
 use local_completionpage\certificate\provider_interface;
-use local_completionpage\certificate\simplecertificate_provider;
 
 /**
  * Aggregates certificates from supported plugins.
@@ -41,8 +39,6 @@ class certificate_manager {
     private static function get_providers(): array {
         return [
             new customcert_provider(),
-            new coursecertificate_provider(),
-            new simplecertificate_provider(),
         ];
     }
 

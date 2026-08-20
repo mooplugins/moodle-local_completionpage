@@ -118,7 +118,7 @@ class suggested_courses {
         ];
 
         if (
-            class_exists('\tool_ecommerce\helper')
+            optional_integrations::is_ecommerce_available()
             && method_exists('\tool_ecommerce\helper', 'course_top_enroll_method')
         ) {
             try {
@@ -156,6 +156,7 @@ class suggested_courses {
             'id' => (int) $course->id,
             'url' => $url,
             'imgurl' => $imgurl,
+            'placeholderimgurl' => self::get_placeholder_image_url(),
             'name' => format_string($course->fullname),
             'categoryname' => $categoryname,
         ] + $enrolmethod;
@@ -164,7 +165,8 @@ class suggested_courses {
     /**
      * Other visible courses in the same category.
      *
-     * @param int $courseid
+     * @param int $courseid Course id.
+     * @param int $limit Maximum number of course ids to return.
      * @return int[]
      */
     public static function get_same_category_courseids(int $courseid, int $limit = 3): array {
@@ -186,5 +188,16 @@ class suggested_courses {
         );
 
         return array_map('intval', array_keys($records));
+    }
+
+    /**
+     * Placeholder icon when a course has no overview image.
+     *
+     * @return string
+     */
+    public static function get_placeholder_image_url(): string {
+        global $OUTPUT;
+
+        return $OUTPUT->image_url('image_placeholder', 'local_completionpage')->out(false);
     }
 }

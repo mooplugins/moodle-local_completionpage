@@ -128,7 +128,7 @@ class completion_page implements renderable, templatable {
                     $cert['certificatepresentedto'] = $data['certificatepresentedto'];
                     $cert['haspdfpreview'] = !empty($cert['previewurl']) && in_array(
                         $cert['plugin'] ?? '',
-                        ['customcert', 'simplecertificate', 'coursecertificate'],
+                        ['customcert'],
                         true
                     );
                     return $cert;

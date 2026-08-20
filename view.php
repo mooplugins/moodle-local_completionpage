@@ -26,6 +26,7 @@ require_once(__DIR__ . '/../../config.php');
 
 use local_completionpage\output\completion_page;
 use local_completionpage\service\completion_gate;
+use local_completionpage\service\optional_integrations;
 
 $courseid = required_param('courseid', PARAM_INT);
 
@@ -47,7 +48,7 @@ $PAGE->set_title(get_string('completionpage', 'local_completionpage'));
 $PAGE->set_heading('');
 $PAGE->add_body_class('local-completionpage-page');
 // Same add-to-cart / price-option handlers as homepage catalog cards.
-if (file_exists($CFG->dirroot . '/enrol/ecommerce/amd/src/helper.js')) {
+if (optional_integrations::is_ecommerce_ui_available()) {
     $PAGE->requires->js_call_amd('enrol_ecommerce/helper', 'priceoptsEvents');
 }
 

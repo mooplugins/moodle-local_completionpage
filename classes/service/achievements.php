@@ -282,6 +282,10 @@ class achievements {
             return false;
         }
 
+        if (!optional_integrations::is_plugin_installed_and_enabled('local_timespent')) {
+            return false;
+        }
+
         return $DB->get_manager()->table_exists('local_timespent_aggregate');
     }
 

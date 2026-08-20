@@ -32,6 +32,7 @@ use local_completionpage\service\completion_gate;
 use local_completionpage\service\config_resolver;
 use local_completionpage\service\course_config;
 use local_completionpage\service\message_content;
+use local_completionpage\service\optional_integrations;
 
 /**
  * Hook callbacks for course edit form integration.
@@ -133,6 +134,18 @@ JS
             $tristate
         );
         $mform->addHelpButton('completionpage_sectioncertificates', 'section_certificates', 'local_completionpage');
+        if (!optional_integrations::is_section_available('certificates')) {
+            $mform->hardFreeze('completionpage_sectioncertificates');
+            $mform->addElement(
+                'static',
+                'completionpage_sectioncertificates_note',
+                '',
+                optional_integrations::render_section_unavailable_notice(
+                    get_string('integration_customcert_name', 'local_completionpage'),
+                    optional_integrations::URL_CUSTOMCERT
+                )
+            );
+        }
 
         $mform->addElement(
             'select',

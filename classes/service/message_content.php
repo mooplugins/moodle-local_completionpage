@@ -254,7 +254,10 @@ class message_content {
      * @param int $courseid
      */
     public static function delete_course_files(int $courseid): void {
-        $context = \context_course::instance($courseid);
+        $context = \context_course::instance($courseid, IGNORE_MISSING);
+        if (!$context) {
+            return;
+        }
         $fs = get_file_storage();
         foreach ([self::FILEAREA_HEADLINE, self::FILEAREA_MESSAGE] as $filearea) {
             $fs->delete_area_files($context->id, 'local_completionpage', $filearea, $courseid);

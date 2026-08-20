@@ -25,9 +25,8 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'local_completionpage';
-$plugin->version = 2026081920;
+$plugin->version = 2026082011;
 $plugin->requires = 2024100700; // Moodle 4.5 or later.
 $plugin->supported = [405, 502]; // Moodle 4.5 through 5.2.
 $plugin->maturity = MATURITY_STABLE;
-$plugin->release = '1.2.28';
-// Local_timespent is optional — the plugin falls back to standard-log estimates when it is not installed.
+$plugin->release = '1.2.30';

@@ -46,7 +46,8 @@ class config_resolver {
             'feedbackcmid' => $course->feedbackcmid ? (int) $course->feedbackcmid : 0,
             'suggestedcourses' => self::parse_course_ids($course->suggestedcourses),
             'sectionmessage' => self::resolve_bool('section_message', $course->sectionmessage),
-            'sectioncertificates' => self::resolve_bool('section_certificates', $course->sectioncertificates),
+            'sectioncertificates' => optional_integrations::is_section_available('certificates')
+                && self::resolve_bool('section_certificates', $course->sectioncertificates),
             'sectionfeedback' => self::resolve_bool('section_feedback', $course->sectionfeedback),
             'sectionsuggested' => self::resolve_bool('section_suggested', $course->sectionsuggested),
             'sectionexit' => self::resolve_bool('section_exit', $course->sectionexit),

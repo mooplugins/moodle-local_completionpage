@@ -8,18 +8,27 @@
 
     @template local_completionpage/course_card
 
-    Catalog course card (theme_learner/course_card), with quoted image src.
+    Catalog course card for suggested courses on the completion page.
 
     Example context (json):
     {
         "url": "https://example.com/course/view.php?id=1",
         "imgurl": "https://example.com/pluginfile.php/1/course/overviewfiles/intro.jpg",
+        "placeholderimgurl": "https://example.com/theme/image.php/boost/local_completionpage/1/image_placeholder",
         "name": "Introduction to Moodle",
         "categoryname": "Online Courses",
         "isenrolled": true,
+        "expirywarning": "",
         "button": {
             "url": "https://example.com/course/view.php?id=1",
             "label": "View Course"
+        },
+        "ecommerce": {
+            "mainprice": "$99",
+            "addtocarturl": "https://example.com/enrol/ecommerce/addtocart.php",
+            "courseid": 1,
+            "hash": "abc123",
+            "type": "course"
         }
     }
 }}
@@ -27,8 +36,8 @@
     <div class="learner-course-card-content border-0">
         <a href="{{{url}}}" class="text-decoration-none">
             <div class="learner_course_card_img{{^imgurl}} frontpage-course-img-empty{{/imgurl}}">
-                {{#imgurl}}<img src="{{{imgurl}}}" alt="{{name}}" />{{/imgurl}}
-                {{^imgurl}}<i class="fa-regular fa-image"></i>{{/imgurl}}
+                {{#imgurl}}<img src="{{{imgurl}}}" alt="{{name}}">{{/imgurl}}
+                {{^imgurl}}<img src="{{{placeholderimgurl}}}" alt="" class="local-completionpage__course-placeholder-icon">{{/imgurl}}
             </div>
         </a>
 
@@ -68,12 +77,12 @@
             {{/expirywarning}}
             {{^expirywarning}}
                 <p class="mb-0 have_access badge text-bg-green rounded-pill">
-                    {{#str}}have_access, theme_learner{{/str}}
+                    {{#str}}coursecardhaveaccess, local_completionpage{{/str}}
                 </p>
             {{/expirywarning}}
-                    <a href="{{{url}}}" class="btn btn-course-card w-100 rounded-2 fw-bold" target="_blank">
-                <span>{{#str}}view_course, theme_learner{{/str}}</span>
-                <span class="ms-2"><i class="fa fa-chevron-right"></i></span>
+            <a href="{{{url}}}" class="btn btn-course-card w-100 rounded-2 fw-bold" target="_blank" rel="noopener noreferrer">
+                <span>{{#str}}viewcourse, local_completionpage{{/str}}</span>
+                <span class="ms-2"><i class="fa fa-chevron-right" aria-hidden="true"></i></span>
             </a>
             <div class="clear"></div>
         </div>
@@ -82,9 +91,9 @@
         {{^isenrolled}}
         {{#button}}
         <div class="learner_course_card_footer">
-            <a href="{{{url}}}" class="btn btn-course-card w-100 rounded-2 fw-bold" target="_blank">
+            <a href="{{{url}}}" class="btn btn-course-card w-100 rounded-2 fw-bold" target="_blank" rel="noopener noreferrer">
                 <span>{{label}}</span>
-                <span class="ms-2"><i class="fa fa-chevron-right"></i></span>
+                <span class="ms-2"><i class="fa fa-chevron-right" aria-hidden="true"></i></span>
             </a>
             <div class="clear"></div>
         </div>
@@ -99,7 +108,7 @@
                     {{#multioptions}}
                         <select name="price" class="form-control mb-3 price-select-option">
                             <option value="" data-price="{{{mainprice}}}">
-                                {{#str}}choose_option, enrol_ecommerce{{/str}}
+                                {{#str}}coursecardchooseoption, local_completionpage{{/str}}
                             </option>
                             {{#priceoptions}}
                                 <option value="{{value}}" data-price="{{{price}}}">
@@ -119,14 +128,14 @@
                     <input type="hidden" name="type" value="{{type}}">
                     <button type="submit" class="btn btn-add-to-cart btn-course-card w-100 rounded-2 fw-bold">
                         {{#addtocartlabel}}<span>{{addtocartlabel}}</span>{{/addtocartlabel}}
-                        {{^addtocartlabel}}<span>{{#str}}add_to_cart, theme_learner{{/str}}</span>{{/addtocartlabel}}
-                        <span class="ms-2"><i class="fa fa-chevron-right"></i></span>
+                        {{^addtocartlabel}}<span>{{#str}}coursecardaddtocart, local_completionpage{{/str}}</span>{{/addtocartlabel}}
+                        <span class="ms-2"><i class="fa fa-chevron-right" aria-hidden="true"></i></span>
                     </button>
                 </form>
             {{/fullybooked}}
             {{#fullybooked}}
-                <button disabled class="btn btn-add-to-cart btn-course-card w-100 rounded-2 fw-bold">
-                    <span>{{#str}}btn_fully_booked, enrol_ecommerce{{/str}}</span>
+                <button type="button" disabled class="btn btn-add-to-cart btn-course-card w-100 rounded-2 fw-bold">
+                    <span>{{#str}}coursecardfullybooked, local_completionpage{{/str}}</span>
                 </button>
             {{/fullybooked}}
         </div>
