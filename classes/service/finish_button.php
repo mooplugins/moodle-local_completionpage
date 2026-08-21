@@ -36,23 +36,14 @@ class finish_button {
      * @return \action_link|null
      */
     public static function get_action_link(\stdClass $course, int $userid): ?\action_link {
-        global $CFG, $OUTPUT;
+        global $OUTPUT;
 
         if (!completion_gate::can_view_page($course, $userid)) {
             return null;
         }
 
         $url = completion_gate::page_url((int) $course->id);
-
-        if (!empty($CFG->theme) && $CFG->theme === 'learner') {
-            if (get_string_manager()->string_exists('act_nav_finish', 'theme_learner')) {
-                $label = get_string('act_nav_finish', 'theme_learner');
-            } else {
-                $label = get_string('finish', 'theme_learner') . ' <i class="icon fa fa-arrow-right fa-fw ms-2"></i>';
-            }
-        } else {
-            $label = get_string('finishbutton', 'local_completionpage') . ' ' . $OUTPUT->rarrow();
-        }
+        $label = get_string('finishbutton', 'local_completionpage') . ' ' . $OUTPUT->rarrow();
 
         $attributes = [
             'class' => 'btn btn-link',

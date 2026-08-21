@@ -52,12 +52,22 @@ class configcheckbox_unavailable extends \admin_setting_configcheckbox {
     }
 
     /**
-     * Do not change the stored value while unavailable.
+     * Persist the default/current value so upgrade settings can complete
+     * while the dependent plugin is missing. The UI stays read-only.
      *
      * @param mixed $data
      * @return string
      */
     public function write_setting($data) {
+        // Incoming form data is ignored; this setting is not editable while unavailable.
+        unset($data);
+
+        $current = $this->get_setting();
+        if ($current === null) {
+            return parent::write_setting($this->get_defaultsetting());
+        }
+
+        // Keep the stored value unchanged while unavailable.
         return '';
     }
 

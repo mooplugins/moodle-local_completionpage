@@ -162,6 +162,6 @@ class optional_integrations {
 
         $message = get_string('settings_ecommerce_comingsoon', 'local_completionpage', $link);
 
-        return \html_writer::div($message, 'alert alert-info mt-2 mb-0');
+        return \html_writer::div($message, 'alert alert-info mt-2 mb-2');
     }
 }

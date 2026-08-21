@@ -621,7 +621,7 @@ body.path-local-completionpage .local-completionpage a.local-completionpage__cer
     font-weight: 600;
 }
 
-/* Suggested course cards — self-contained (no theme_learner dependency). */
+/* Suggested course cards — self-contained styles. */
 .local-completionpage .learner_course_card {
     box-sizing: border-box;
     border: 1px solid var(--ccp-border);

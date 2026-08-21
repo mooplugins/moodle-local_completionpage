@@ -90,12 +90,10 @@ class achievements {
             $data['grade'] = $grade;
         }
 
-        if (self::is_timespent_display_allowed((int) $course->id)) {
-            $timespentseconds = self::get_timespent_seconds((int) $course->id, $userid);
-            if ($timespentseconds !== null && $timespentseconds > 0) {
-                $data['hastimespent'] = true;
-                $data['timespent'] = format_time($timespentseconds);
-            }
+        $timespentseconds = self::get_timespent_seconds((int) $course->id, $userid);
+        if ($timespentseconds !== null && $timespentseconds > 0) {
+            $data['hastimespent'] = true;
+            $data['timespent'] = format_time($timespentseconds);
         }
 
         $badges = self::get_course_badges($course, $userid);
@@ -219,23 +217,6 @@ class achievements {
         }
 
         return $badges;
-    }
-
-    /**
-     * Whether the course allows time spent to be shown to learners.
-     *
-     * Honours the course setting "Show time spent" (`showtimespent`) when
-     * custom course options are available.
-     *
-     * @param int $courseid
-     * @return bool
-     */
-    public static function is_timespent_display_allowed(int $courseid): bool {
-        if (!function_exists('slms_get_custom_course_options')) {
-            return true;
-        }
-
-        return !empty(slms_get_custom_course_options($courseid, 'showtimespent'));
     }
 
     /**

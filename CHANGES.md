@@ -2,20 +2,37 @@
 
 All notable changes to the Course Completion Page plugin are documented here.
 
+## 1.2.32 - 2026-08-20
+
+### Changed
+
+- Removed optional platform-specific time-spent visibility gate. Time spent is
+  shown whenever a value is available from the configured source.
+
+## 1.2.31 - 2026-08-20
+
+### Fixed
+
+- Unavailable section checkboxes now persist their default on first save so
+  Site administration → New settings can complete when an optional plugin
+  (for example Custom certificate) is not installed.
+
 ## 1.2.30 - 2026-08-20
 
 ### Added
 
-- `pix/image_placeholder.svg` for suggested course cards when a course has no overview
-  image.
-- Self-contained suggested course card styles in `styles.css`.
+- `pix/image_placeholder.svg` for suggested course cards when a course has no
+  overview image.
+- Self-contained suggested course card styles in `styles.css` (works on standard
+  Moodle themes such as Boost without a custom LMS theme).
 
 ### Changed
 
-- Suggested course cards show the bundled placeholder icon instead of Font Awesome or a
-  generic JPEG fallback.
-- Optional integrations: `local_timespent`, `mod_customcert`, and ecommerce notice handling
-  (no hard `$plugin->dependencies`; time spent falls back to standard logs when Time spent
+- Suggested course cards show the bundled placeholder icon instead of Font Awesome
+  or a generic JPEG fallback.
+- Optional integrations documented and soft-detected: `local_timespent`,
+  `mod_customcert`, and ecommerce coming-soon notice (no hard
+  `$plugin->dependencies`; time spent falls back to standard logs when Time spent
   is not installed).
 
 ## 1.2.29 - 2026-08-20
@@ -23,8 +40,8 @@ All notable changes to the Course Completion Page plugin are documented here.
 ### Fixed
 
 - PHPDoc for `suggested_courses::get_same_category_courseids()` (CI moodlecheck).
-- Moodle stylelint compliance in `styles.css` (removed `!important`, invalid `clamp()`,
-  long hex colours).
+- Moodle stylelint compliance in `styles.css` (removed `!important`, invalid
+  `clamp()`, long hex colours).
 - Mustache HTML validation in `course_card.mustache` (void element trailing slash).
 
 ## 1.2.28 - 2026-08-19
@@ -84,17 +101,10 @@ All notable changes to the Course Completion Page plugin are documented here.
 
 ### Changed
 
-- Course settings form reorganised per review feedback: section toggles act as
-  parents for related fields (custom message, feedback link, suggested courses),
-  dependent fields hide when a section is disabled, Exit options is last, and
-  help icons were added for all course completion page fields.
-
-## 1.2.17 - 2026-08-17
-
-### Changed
-
-- Finish button on the last activity uses the same link style as Previous/Next
-  navigation (not a primary button).
+- Course settings form reorganised: section toggles act as parents for related
+  fields (custom message, feedback link, suggested courses), dependent fields hide
+  when a section is disabled, Exit options is last, and help icons were added for
+  all course completion page fields.
 
 ## 1.2.16 - 2026-08-17
 
@@ -107,18 +117,8 @@ All notable changes to the Course Completion Page plugin are documented here.
 
 ### Changed
 
-- Removed **Redirect on completion**. Learners are no longer sent automatically
-  to the completion page when they finish or revisit the course home.
-- Added a **Finish** button on activity navigation (right side) on the **last
-  activity**, shown when the completion page is enabled and the learner has met
-  course completion criteria.
-- Site admin settings: removed redirect toggle; section defaults use their own
-  heading instead of duplicating the page title.
-
-### Removed
-
-- Automatic redirect on course completion and on course home visit.
-- Per-course “Redirect on completion” override.
+- Site admin settings: section defaults use their own heading instead of
+  duplicating the page title.
 
 ## 1.2.14 - 2026-08-17
 
@@ -161,45 +161,42 @@ All notable changes to the Course Completion Page plugin are documented here.
 
 ### Changed
 
-- Removed the duplicate page heading (“Course completed”); the first section title is the only heading.
+- Removed the duplicate page heading (“Course completed”); the first section title
+  is the only heading.
 
 ## 1.2.9 - 2026-08-17
 
 ### Fixed
 
-- Certificate section is hidden when the certificate activity is hidden (or otherwise not
-  visible to the learner). Issued certs from non-visible course modules are omitted.
+- Certificate section is hidden when the certificate activity is hidden (or
+  otherwise not visible to the learner). Issued certs from non-visible course
+  modules are omitted.
 
 ## 1.2.8 - 2026-08-17
 
 ### Changed
 
-- Course administration **Course Completion Page** link now opens advanced course settings
-  (`/course/edit.php?…&advanced=1`) instead of the simplified `setting.php` screen, and
-  scrolls to the Course Completion Page section.
-
-## 1.2.7 - 2026-08-14
-
-### Fixed
-
-- Achievements time spent now respects the course **Show time spent** setting
-  (`showtimespent`). When that option is off, time spent is hidden on the completion page.
+- Course administration **Course Completion Page** link now opens advanced course
+  settings (`/course/edit.php?…&advanced=1`).
 
 ## 1.2.6 - 2026-08-14
 
 ### Fixed
 
-- Suggested course card enrol / add-to-cart buttons now match the homepage catalog:
-  ecommerce cart handlers are loaded, and enrol CTA data is merged the same way as
-  frontpage course cards.
+- Suggested course card enrol / add-to-cart buttons align with homepage catalog
+  behaviour when an ecommerce plugin is present (handlers loaded and enrol CTA
+  data merged the same way as frontpage course cards).
 
 ## 1.2.5 - 2026-08-14
 
 ### Changed
 
-- Completion page accents now follow the theme primary colour instead of a hardcoded green palette.
-- Certificate actions are stacked in two rows; share and “preview full certificate” were removed.
-- Suggested courses uses a searchable course picker in course settings, and falls back to the same category when none are selected.
+- Completion page accents now follow the theme primary colour instead of a
+  hardcoded green palette.
+- Certificate actions are stacked in two rows; share and “preview full
+  certificate” were removed.
+- Suggested courses uses a searchable course picker in course settings, and falls
+  back to the same category when none are selected.
 
 ### Fixed
 
@@ -210,22 +207,17 @@ All notable changes to the Course Completion Page plugin are documented here.
 
 ### Fixed
 
-- Certificate preview/download no longer hits the hidden Custom certificate activity page
-  (`Sorry, this activity is currently hidden`). Issued PDFs are served via Custom cert’s
-  my-certificates download URL, which still works when the activity is hidden on the course.
+- Certificate preview/download no longer hits the hidden Custom certificate
+  activity page (`Sorry, this activity is currently hidden`). Issued PDFs are
+  served via Custom cert’s my-certificates download URL, which still works when
+  the activity is hidden on the course.
 
 ## 1.2.3 - 2026-08-10
 
 ### Changed
 
-- Added site setting to prefer `local_timespent` for achievements time spent when that
-  plugin is installed (optional; not a Moodle plugin dependency).
-
-## 1.2.2 - 2026-08-04
-
-### Fixed
-
-- Completion redirect now uses `before_course_viewed` (same hook as core external course redirects) so completed learners are sent to the completion page when opening the course home.
+- Added site setting to prefer `local_timespent` for achievements time spent when
+  that plugin is installed (optional; not a Moodle plugin dependency).
 
 ## 1.2.1 - 2026-08-04
 
@@ -240,27 +232,32 @@ All notable changes to the Course Completion Page plugin are documented here.
 
 ### Added
 
-- Marketplace packaging: full GPLv3 `LICENSE`, `CHANGES.md`, `thirdpartylibs.xml`, and GitHub Actions CI scaffold.
+- Marketplace packaging: full GPLv3 `LICENSE`, `CHANGES.md`, `thirdpartylibs.xml`,
+  and GitHub Actions CI scaffold.
 - `$plugin->supported` for Moodle 4.5–5.2 and `MATURITY_STABLE` release metadata.
-- Achievements section (course grade, badges, optional time spent via soft plugin detection).
-- Certificate preview and share helpers for issued certificates.
+- Achievements section (course grade, badges, optional time spent via soft plugin
+  detection).
+- Certificate preview helpers for issued certificates.
 - MooPlugins product documentation and README.
 
 ### Changed
 
-- Privacy API uses `null_provider` (plugin stores course settings only; no learner personal data).
+- Privacy API uses `null_provider` (plugin stores course settings only; no learner
+  personal data).
 - Soft-guard when `mod_feedback` is missing or disabled.
 - Learner-facing strings moved fully into the English language pack.
 
 ### Fixed
 
-- Course progress percentage is not treated as course completion (gate uses Moodle course completion only).
+- Course progress percentage is not treated as course completion (gate uses Moodle
+  course completion only).
 
 ## 1.1.2 - 2026-07-30
 
 ### Changed
 
-- Certificate preview styling (removed gold ornamental frame; softened PDF viewer chrome).
+- Certificate preview styling (removed gold ornamental frame; softened PDF viewer
+  chrome).
 
 ## 1.1.1 - 2026-07-30
 
@@ -280,6 +277,5 @@ All notable changes to the Course Completion Page plugin are documented here.
 
 - Initial Course Completion Page for Moodle.
 - Site defaults and per-course settings (inherit / enable / disable).
-- Completion message, certificates, feedback CTA (`mod_feedback`), suggested courses, and exit actions.
-- Soft detection for `customcert`, `coursecertificate`, and `simplecertificate`.
-- Optional redirect on course completion.
+- Completion message, certificates (`mod_customcert`), feedback CTA
+  (`mod_feedback`), suggested courses, and exit actions.
