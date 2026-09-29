@@ -41,7 +41,9 @@ class config_resolver {
         $course = course_config::get($courseid);
 
         return (object) [
-            'enabled' => self::resolve_bool('enable', $course->enabled),
+            'enabled' => self::resolve_bool('enable', $course->enabled, true),
+            'redirect' => self::resolve_bool('redirect', $course->redirectoverride, true),
+            'coursebanner' => self::resolve_site_bool('coursebanner', true),
             'customheadline' => $course->customheadline,
             'custommessage' => $course->custommessage,
             'feedbackcmid' => $course->feedbackcmid ? (int) $course->feedbackcmid : 0,
@@ -53,6 +55,8 @@ class config_resolver {
             'sectionsuggested' => self::resolve_bool('section_suggested', $course->sectionsuggested),
             'sectionexit' => self::resolve_bool('section_exit', $course->sectionexit),
             'sectionachievements' => self::resolve_bool('section_achievements', $course->sectionachievements),
+            'sectioncompetencies' => optional_integrations::is_section_available('competencies')
+                && self::resolve_bool('section_competencies', $course->sectioncompetencies),
         ];
     }
 
@@ -61,9 +65,10 @@ class config_resolver {
      *
      * @param string $configkey
      * @param int $override
+     * @param bool $default Site default when the config key has never been saved.
      * @return bool
      */
-    private static function resolve_bool(string $configkey, int $override): bool {
+    private static function resolve_bool(string $configkey, int $override, bool $default = false): bool {
         // DB drivers may return numeric columns as strings; cast before strict compare.
         $override = (int) $override;
 
@@ -74,7 +79,23 @@ class config_resolver {
             return false;
         }
 
-        return (bool) get_config('local_completionpage', $configkey);
+        return self::resolve_site_bool($configkey, $default);
+    }
+
+    /**
+     * Resolve a site checkbox, using $default when the setting has never been saved.
+     *
+     * @param string $configkey
+     * @param bool $default
+     * @return bool
+     */
+    private static function resolve_site_bool(string $configkey, bool $default = false): bool {
+        $value = get_config('local_completionpage', $configkey);
+        if ($value === false) {
+            return $default;
+        }
+
+        return (bool) $value;
     }
 
     /**

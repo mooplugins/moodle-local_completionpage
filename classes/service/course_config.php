@@ -18,8 +18,8 @@
  * course_config for local_completionpage.
  *
  * @package    local_completionpage
- * @author     BitKea Technologies LLP
  * @copyright  2026 BitKea Technologies LLP
+ * @author     BitKea Technologies LLP
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -57,6 +57,7 @@ class course_config {
                 'sectionsuggested' => constants::INHERIT,
                 'sectionexit' => constants::INHERIT,
                 'sectionachievements' => constants::INHERIT,
+                'sectioncompetencies' => constants::INHERIT,
                 'timemodified' => 0,
             ];
         } else {
@@ -70,6 +71,9 @@ class course_config {
             $record->sectionexit = (int) $record->sectionexit;
             $record->sectionachievements = isset($record->sectionachievements)
                 ? (int) $record->sectionachievements
+                : constants::INHERIT;
+            $record->sectioncompetencies = isset($record->sectioncompetencies)
+                ? (int) $record->sectioncompetencies
                 : constants::INHERIT;
             $record->timemodified = (int) $record->timemodified;
         }
@@ -101,6 +105,7 @@ class course_config {
         $record->sectionsuggested = (int) ($data->sectionsuggested ?? constants::INHERIT);
         $record->sectionexit = (int) ($data->sectionexit ?? constants::INHERIT);
         $record->sectionachievements = (int) ($data->sectionachievements ?? constants::INHERIT);
+        $record->sectioncompetencies = (int) ($data->sectioncompetencies ?? constants::INHERIT);
         $record->timemodified = time();
 
         if ($existing) {

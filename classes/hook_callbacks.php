@@ -18,8 +18,8 @@
  * hook_callbacks for local_completionpage.
  *
  * @package    local_completionpage
- * @author     BitKea Technologies LLP
  * @copyright  2026 BitKea Technologies LLP
+ * @author     BitKea Technologies LLP
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -90,6 +90,14 @@ JS
 
         $mform->addElement('select', 'completionpage_enabled', get_string('course_enabled', 'local_completionpage'), $tristate);
         $mform->addHelpButton('completionpage_enabled', 'enable', 'local_completionpage');
+
+        $mform->addElement(
+            'select',
+            'completionpage_redirect',
+            get_string('course_redirect', 'local_completionpage'),
+            $tristate
+        );
+        $mform->addHelpButton('completionpage_redirect', 'redirect', 'local_completionpage');
 
         $mform->addElement(
             'static',
@@ -208,6 +216,26 @@ JS
 
         $mform->addElement(
             'select',
+            'completionpage_sectioncompetencies',
+            get_string('course_section_competencies', 'local_completionpage'),
+            $tristate
+        );
+        $mform->addHelpButton('completionpage_sectioncompetencies', 'section_competencies', 'local_completionpage');
+        if (!optional_integrations::is_section_available('competencies')) {
+            $mform->hardFreeze('completionpage_sectioncompetencies');
+            $mform->addElement(
+                'static',
+                'completionpage_sectioncompetencies_note',
+                '',
+                \html_writer::div(
+                    get_string('settings_competencies_disabled', 'local_completionpage'),
+                    'text-muted'
+                )
+            );
+        }
+
+        $mform->addElement(
+            'select',
             'completionpage_sectionexit',
             get_string('course_section_exit', 'local_completionpage'),
             $tristate
@@ -231,6 +259,7 @@ JS
 
         $courseid = (int) $course->id;
         $mform->setDefault('completionpage_enabled', $record->enabled);
+        $mform->setDefault('completionpage_redirect', $record->redirectoverride);
         $mform->setDefault(
             'completionpage_customheadline',
             message_content::to_editor(
@@ -262,6 +291,7 @@ JS
         $mform->setDefault('completionpage_sectionsuggested', $record->sectionsuggested);
         $mform->setDefault('completionpage_sectionexit', $record->sectionexit);
         $mform->setDefault('completionpage_sectionachievements', $record->sectionachievements);
+        $mform->setDefault('completionpage_sectioncompetencies', $record->sectioncompetencies);
     }
 
     /**
@@ -305,6 +335,7 @@ JS
 
         course_config::save((int) $data->id, (object) [
             'enabled' => $data->completionpage_enabled ?? constants::INHERIT,
+            'redirectoverride' => $data->completionpage_redirect ?? constants::INHERIT,
             'customheadline' => $customheadline,
             'custommessage' => $custommessage,
             'feedbackcmid' => $data->completionpage_feedbackcmid ?? 0,
@@ -319,6 +350,104 @@ JS
             'sectionsuggested' => $data->completionpage_sectionsuggested ?? constants::INHERIT,
             'sectionexit' => $data->completionpage_sectionexit ?? constants::INHERIT,
             'sectionachievements' => $data->completionpage_sectionachievements ?? constants::INHERIT,
+            'sectioncompetencies' => $data->completionpage_sectioncompetencies ?? constants::INHERIT,
         ]);
+    }
+
+    /**
+     * Redirect completed learners to the completion page when they open the course home.
+     *
+     * @param \core_course\hook\before_course_viewed $hook
+     */
+    public static function before_course_viewed(\core_course\hook\before_course_viewed $hook): void {
+        global $USER;
+
+        if (!isloggedin() || isguestuser()) {
+            return;
+        }
+
+        $course = $hook->course;
+        if (empty($course->id) || (int) $course->id <= SITEID) {
+            return;
+        }
+
+        if (!completion_gate::should_redirect_on_course_view($course, (int) $USER->id)) {
+            return;
+        }
+
+        // Mark before redirect so a back-navigation still shows the course + banner.
+        completion_gate::mark_completion_page_seen((int) $course->id);
+        redirect(completion_gate::page_url((int) $course->id));
+    }
+
+    /**
+     * Inject a course-page CTA for completed learners (placed after sections via JS).
+     *
+     * @param \core\hook\output\before_footer_html_generation $hook
+     */
+    public static function before_footer_html_generation(
+        \core\hook\output\before_footer_html_generation $hook
+    ): void {
+        global $PAGE, $USER, $OUTPUT, $COURSE;
+
+        if (!isloggedin() || isguestuser()) {
+            return;
+        }
+
+        if ($PAGE->pagelayout !== 'course' && $PAGE->pagelayout !== 'incourse') {
+            return;
+        }
+
+        // Course home only — not activity pages.
+        if (!empty($PAGE->cm)) {
+            return;
+        }
+
+        $course = !empty($COURSE->id) ? $COURSE : ($PAGE->course ?? null);
+        if (empty($course->id) || (int) $course->id <= SITEID) {
+            return;
+        }
+
+        if (!completion_gate::should_show_course_banner($course, (int) $USER->id)) {
+            return;
+        }
+
+        $url = completion_gate::page_url((int) $course->id);
+        $data = [
+            'url' => $url->out(false),
+            'heading' => get_string('coursebannerheading', 'local_completionpage'),
+            'message' => get_string('coursebannermessage', 'local_completionpage'),
+            'buttonlabel' => get_string('coursebannerbutton', 'local_completionpage'),
+        ];
+
+        $html = $OUTPUT->render_from_template('local_completionpage/course_banner', $data);
+        $hook->add_html($html);
+
+        $PAGE->requires->js_amd_inline(<<<'JS'
+require([], function() {
+    const placeBanner = () => {
+        const banner = document.getElementById('local-completionpage-course-banner');
+        if (!banner || banner.dataset.placed === '1') {
+            return;
+        }
+        // Place at the top of course content so learners see it without scrolling.
+        const target = document.querySelector(
+            '#region-main .course-content, #region-main [data-region="course-content"], #region-main .course-content-container, #region-main'
+        );
+        if (!target) {
+            return;
+        }
+        target.insertBefore(banner, target.firstChild);
+        banner.dataset.placed = '1';
+        banner.hidden = false;
+    };
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', placeBanner);
+    } else {
+        placeBanner();
+    }
+});
+JS
+        );
     }
 }

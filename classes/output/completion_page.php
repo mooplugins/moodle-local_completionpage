@@ -18,8 +18,8 @@
  * completion_page for local_completionpage.
  *
  * @package    local_completionpage
- * @author     BitKea Technologies LLP
  * @copyright  2026 BitKea Technologies LLP
+ * @author     BitKea Technologies LLP
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -27,6 +27,7 @@ namespace local_completionpage\output;
 
 use local_completionpage\service\achievements;
 use local_completionpage\service\certificate_manager;
+use local_completionpage\service\competencies;
 use local_completionpage\service\completion_gate;
 use local_completionpage\service\config_resolver;
 use local_completionpage\service\feedback_link;
@@ -83,6 +84,7 @@ class completion_page implements renderable, templatable {
             'showmessage' => false,
             'showcertificates' => false,
             'showachievements' => false,
+            'showcompetencies' => false,
             'showfeedback' => false,
             'showsuggested' => false,
             'showexit' => false,
@@ -156,6 +158,19 @@ class completion_page implements renderable, templatable {
                 $data['hasbadges'] = !empty($achievements['hasbadges']);
                 $data['badgesheading'] = get_string('badgesheading', 'local_completionpage');
                 $data['badges'] = $achievements['badges'];
+            }
+        }
+
+        if ($this->config->sectioncompetencies) {
+            $compdata = competencies::get_section_data($this->course, $this->userid);
+            if ($compdata['showsection']) {
+                $data['showcompetencies'] = true;
+                $data['competenciesheading'] = get_string('competenciesheading', 'local_completionpage');
+                $data['competenciesdesc'] = get_string('competenciesdesc', 'local_completionpage');
+                $data['competenciessummary'] = $compdata['summary'];
+                $data['competencies'] = $compdata['competencies'];
+                $data['competenciesviewallurl'] = $compdata['viewallurl'];
+                $data['competenciesviewalllabel'] = get_string('competenciesviewall', 'local_completionpage');
             }
         }
 

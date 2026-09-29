@@ -18,8 +18,8 @@
  * Site administration settings for local_completionpage.
  *
  * @package    local_completionpage
- * @author     BitKea Technologies LLP
  * @copyright  2026 BitKea Technologies LLP
+ * @author     BitKea Technologies LLP
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -35,6 +35,20 @@ if ($hassiteconfig) {
         'local_completionpage/enable',
         get_string('settings_enable', 'local_completionpage'),
         get_string('settings_enable_desc', 'local_completionpage', get_string('enable_help', 'local_completionpage')),
+        1
+    ));
+
+    $settings->add(new admin_setting_configcheckbox(
+        'local_completionpage/redirect',
+        get_string('settings_redirect', 'local_completionpage'),
+        get_string('settings_redirect_desc', 'local_completionpage'),
+        1
+    ));
+
+    $settings->add(new admin_setting_configcheckbox(
+        'local_completionpage/coursebanner',
+        get_string('settings_coursebanner', 'local_completionpage'),
+        get_string('settings_coursebanner_desc', 'local_completionpage'),
         1
     ));
 
@@ -94,6 +108,26 @@ if ($hassiteconfig) {
         get_string('section_achievements_help', 'local_completionpage'),
         1
     ));
+
+    if (\local_completionpage\service\optional_integrations::is_section_available('competencies')) {
+        $settings->add(new admin_setting_configcheckbox(
+            'local_completionpage/section_competencies',
+            get_string('settings_section_competencies', 'local_completionpage'),
+            get_string('section_competencies_help', 'local_completionpage'),
+            1
+        ));
+    } else {
+        $settings->add(new \local_completionpage\admin_setting\configcheckbox_unavailable(
+            'local_completionpage/section_competencies',
+            get_string('settings_section_competencies', 'local_completionpage'),
+            get_string('section_competencies_help', 'local_completionpage'),
+            '1',
+            \html_writer::div(
+                get_string('settings_competencies_disabled', 'local_completionpage'),
+                'text-muted'
+            )
+        ));
+    }
 
     $settings->add(new admin_setting_configcheckbox(
         'local_completionpage/section_exit',

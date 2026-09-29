@@ -41,6 +41,8 @@ if (!completion_gate::can_view_page($course, (int) $USER->id)) {
     throw new moodle_exception('errornotcomplete', 'local_completionpage');
 }
 
+completion_gate::mark_completion_page_seen($courseid);
+
 $PAGE->set_url(new moodle_url('/local/completionpage/view.php', ['courseid' => $courseid]));
 $PAGE->set_context($context);
 $PAGE->set_pagelayout('standard');

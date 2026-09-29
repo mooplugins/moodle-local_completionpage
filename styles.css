@@ -255,7 +255,6 @@ body.local-completionpage-page #page-header .page-header-headings h1 {
 
 .local-completionpage__section-icon--primary {
     background: var(--ccp-primary);
-    box-shadow: 0 8px 18px color-mix(in srgb, var(--ccp-primary) 28%, transparent);
 }
 
 .local-completionpage__section-title {
@@ -287,18 +286,14 @@ body.path-local-completionpage .local-completionpage a.local-completionpage__btn
     text-decoration: none;
     border: 1px solid transparent;
     line-height: 1.2;
-    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
-}
-
-body.path-local-completionpage .local-completionpage a.local-completionpage__btn:hover {
-    transform: translateY(-1px);
+    box-shadow: none;
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
 }
 
 body.path-local-completionpage .local-completionpage a.local-completionpage__btn--primary,
 body.path-local-completionpage .local-completionpage a.local-completionpage__btn--primary:visited {
     background: var(--ccp-primary);
     color: #fff;
-    box-shadow: 0 8px 18px color-mix(in srgb, var(--ccp-primary) 28%, transparent);
 }
 
 body.path-local-completionpage .local-completionpage a.local-completionpage__btn--primary:hover,
@@ -730,10 +725,6 @@ body.path-local-completionpage .local-completionpage a.local-completionpage__cer
 }
 
 .local-completionpage .learner_course_card_footer {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.75rem;
     font-size: 16px;
     margin: 10px;
     margin-top: auto;
@@ -741,11 +732,7 @@ body.path-local-completionpage .local-completionpage a.local-completionpage__cer
 
 .local-completionpage .learner_course_card_footer .badge {
     display: inline-block;
-    margin-bottom: 0;
-}
-
-.local-completionpage .learner_course_card_footer .btn.btn-course-card {
-    width: 100%;
+    margin-bottom: 10px;
 }
 
 .local-completionpage .have_access,
@@ -985,6 +972,123 @@ body.path-local-completionpage .local-completionpage a.local-completionpage__cou
     font-weight: 700;
 }
 
+/* Competencies */
+.local-completionpage__competencies-summary {
+    margin: 0 0 1rem;
+    font-weight: 600;
+    color: var(--ccp-text-muted, #64748b);
+}
+
+.local-completionpage__competency-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.local-completionpage__competency-item {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.9rem 1rem;
+    border: 1px solid var(--ccp-border, #e2e8f0);
+    border-radius: 14px;
+    background: var(--ccp-surface, #fff);
+}
+
+.local-completionpage__competency-item--proficient {
+    border-color: rgba(22, 163, 74, 0.35);
+    background: rgba(22, 163, 74, 0.04);
+}
+
+.local-completionpage__competency-name {
+    font-weight: 700;
+}
+
+.local-completionpage__competency-id {
+    margin-top: 0.15rem;
+    font-size: 0.85rem;
+    color: var(--ccp-text-muted, #64748b);
+}
+
+.local-completionpage__competency-desc {
+    margin-top: 0.35rem;
+    font-size: 0.9rem;
+    color: var(--ccp-text-muted, #64748b);
+}
+
+.local-completionpage__competency-desc p:last-child {
+    margin-bottom: 0;
+}
+
+.local-completionpage__competency-source {
+    margin-top: 0.45rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--ccp-text-muted, #64748b);
+}
+
+.local-completionpage__competency-activities {
+    margin-top: 0.55rem;
+}
+
+.local-completionpage__competency-activities-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--ccp-text-muted, #64748b);
+    margin-bottom: 0.25rem;
+}
+
+.local-completionpage__competency-activity-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.75rem;
+}
+
+.local-completionpage__competency-activity-link {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--ccp-primary, #0d6efd);
+    text-decoration: none;
+}
+
+.local-completionpage__competency-activity-link:hover,
+.local-completionpage__competency-activity-link:focus {
+    text-decoration: underline;
+}
+
+.local-completionpage__competency-status {
+    flex-shrink: 0;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0.35rem 0.65rem;
+    border-radius: 999px;
+    white-space: nowrap;
+}
+
+.local-completionpage__competency-status--yes {
+    color: #166534;
+    background: rgba(22, 163, 74, 0.15);
+}
+
+.local-completionpage__competency-status--no {
+    color: #92400e;
+    background: rgba(245, 158, 11, 0.15);
+}
+
+@media (max-width: 640px) {
+    .local-completionpage__competency-item {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+
 .local-completionpage__badge-date {
     color: var(--ccp-muted);
     font-size: 0.8rem;
@@ -1070,6 +1174,34 @@ body.path-local-completionpage .local-completionpage a.local-completionpage__exi
     line-height: 1;
 }
 
+/* Course home CTA for completed learners */
+.local-completionpage-course-banner {
+    border-radius: 12px;
+    border-color: var(--ccp-primary-border, #bfdbfe);
+    background: var(--ccp-primary-soft, #eff6ff);
+    color: var(--ccp-text, #111827);
+}
+
+.local-completionpage-course-banner__heading {
+    font-size: 1.05rem;
+    margin-bottom: 0.15rem;
+}
+
+.local-completionpage-course-banner__message {
+    color: var(--ccp-muted, #4b5563);
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+/* Keep primary CTA readable inside alert-info (theme link color would otherwise win). */
+.local-completionpage-course-banner a.local-completionpage-course-banner__btn,
+.local-completionpage-course-banner a.local-completionpage-course-banner__btn:visited,
+.local-completionpage-course-banner a.local-completionpage-course-banner__btn:hover,
+.local-completionpage-course-banner a.local-completionpage-course-banner__btn:focus {
+    color: #fff;
+    white-space: nowrap;
+}
+
 @media (max-width: 767.98px) {
     .local-completionpage__headline h1,
     .local-completionpage__headline h2,
@@ -1094,6 +1226,15 @@ body.path-local-completionpage .local-completionpage a.local-completionpage__exi
     }
 
     .local-completionpage__section-head--split .local-completionpage__btn--browse {
+        width: 100%;
+    }
+
+    .local-completionpage-course-banner__inner {
+        flex-direction: column;
+        align-items: stretch !important;
+    }
+
+    .local-completionpage-course-banner__btn {
         width: 100%;
     }
 }

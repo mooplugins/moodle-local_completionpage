@@ -18,8 +18,8 @@
  * Detects optional integrations used by local_completionpage.
  *
  * @package    local_completionpage
- * @author     BitKea Technologies LLP
  * @copyright  2026 BitKea Technologies LLP
+ * @author     BitKea Technologies LLP
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -108,13 +108,16 @@ class optional_integrations {
      * Sections that hard-depend on an optional plugin return false when that
      * plugin is missing or disabled. Other sections always return true.
      *
-     * @param string $section One of: message, certificates, feedback, suggested, achievements, exit.
+     * @param string $section One of: message, certificates, feedback, suggested, achievements,
+     *                        competencies, exit.
      * @return bool
      */
     public static function is_section_available(string $section): bool {
         switch ($section) {
             case 'certificates':
                 return self::is_customcert_available();
+            case 'competencies':
+                return competencies::is_available();
             case 'message':
             case 'feedback':
             case 'suggested':

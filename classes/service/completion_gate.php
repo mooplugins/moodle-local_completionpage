@@ -96,6 +96,117 @@ class completion_gate {
     }
 
     /**
+     * Whether the learner should be redirected from the course home to the completion page.
+     *
+     * Uses Moodle course completion only (no custom flag). Teachers who can update the
+     * course, guests, and learners who already opened the completion page this session
+     * are skipped so resets/criteria changes stay consistent and redirects do not loop.
+     *
+     * @param \stdClass $course
+     * @param int $userid
+     * @return bool
+     */
+    public static function should_redirect_on_course_view(\stdClass $course, int $userid): bool {
+        global $USER;
+
+        $courseid = (int) $course->id;
+        if ($courseid <= SITEID || $userid <= 0) {
+            return false;
+        }
+
+        // Stay on a specific section view; only redirect from the course home.
+        if (optional_param('section', null, PARAM_INT) !== null
+            || optional_param('sectionid', 0, PARAM_INT)
+            || optional_param('edit', -1, PARAM_INT) === 1) {
+            return false;
+        }
+
+        if (!empty($USER->editing)) {
+            return false;
+        }
+
+        $config = config_resolver::resolve($courseid);
+        if (!$config->enabled || !$config->redirect) {
+            return false;
+        }
+
+        $context = \context_course::instance($courseid);
+        if (has_capability('moodle/course:update', $context)) {
+            return false;
+        }
+
+        if (!has_capability('local/completionpage:view', $context)) {
+            return false;
+        }
+
+        if (!self::can_view_page($course, $userid)) {
+            return false;
+        }
+
+        return !self::has_seen_completion_page($courseid);
+    }
+
+    /**
+     * Whether to show the course-page completion CTA for a completed learner.
+     *
+     * @param \stdClass $course
+     * @param int $userid
+     * @return bool
+     */
+    public static function should_show_course_banner(\stdClass $course, int $userid): bool {
+        $courseid = (int) $course->id;
+        if ($courseid <= SITEID || $userid <= 0) {
+            return false;
+        }
+
+        $config = config_resolver::resolve($courseid);
+        if (!$config->enabled || !$config->coursebanner) {
+            return false;
+        }
+
+        $context = \context_course::instance($courseid);
+        if (has_capability('moodle/course:update', $context)) {
+            return false;
+        }
+
+        if (!has_capability('local/completionpage:view', $context)) {
+            return false;
+        }
+
+        return self::can_view_page($course, $userid);
+    }
+
+    /**
+     * Mark that the learner has opened the completion page this session.
+     *
+     * @param int $courseid
+     */
+    public static function mark_completion_page_seen(int $courseid): void {
+        global $SESSION;
+
+        if ($courseid <= SITEID) {
+            return;
+        }
+
+        if (!isset($SESSION->local_completionpage_seen) || !is_array($SESSION->local_completionpage_seen)) {
+            $SESSION->local_completionpage_seen = [];
+        }
+        $SESSION->local_completionpage_seen[$courseid] = time();
+    }
+
+    /**
+     * Whether the learner already opened the completion page this session.
+     *
+     * @param int $courseid
+     * @return bool
+     */
+    public static function has_seen_completion_page(int $courseid): bool {
+        global $SESSION;
+
+        return !empty($SESSION->local_completionpage_seen[$courseid]);
+    }
+
+    /**
      * Return the course completion timestamp when available.
      *
      * @param int $courseid

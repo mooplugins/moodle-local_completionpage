@@ -18,8 +18,8 @@
  * Upgrade steps for local_completionpage.
  *
  * @package    local_completionpage
- * @author     BitKea Technologies LLP
  * @copyright  2026 BitKea Technologies LLP
+ * @author     BitKea Technologies LLP
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -53,6 +53,37 @@ function xmldb_local_completionpage_upgrade($oldversion) {
     if ($oldversion < 2026080401) {
         // Time spent source setting added — no schema changes.
         upgrade_plugin_savepoint(true, 2026080401, 'local', 'completionpage');
+    }
+
+    if ($oldversion < 2026092400) {
+        $table = new xmldb_table('local_completionpage_course');
+        $field = new xmldb_field(
+            'sectioncompetencies',
+            XMLDB_TYPE_INTEGER,
+            '2',
+            null,
+            XMLDB_NOTNULL,
+            null,
+            '-1',
+            'sectionachievements'
+        );
+
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        upgrade_plugin_savepoint(true, 2026092400, 'local', 'completionpage');
+    }
+
+    if ($oldversion < 2026092901) {
+        // Redirect + course banner settings (no schema changes; redirectoverride already exists).
+        if (get_config('local_completionpage', 'redirect') === false) {
+            set_config('redirect', 1, 'local_completionpage');
+        }
+        if (get_config('local_completionpage', 'coursebanner') === false) {
+            set_config('coursebanner', 1, 'local_completionpage');
+        }
+        upgrade_plugin_savepoint(true, 2026092901, 'local', 'completionpage');
     }
 
     return true;

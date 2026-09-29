@@ -210,6 +210,66 @@
     </section>
     {{/showachievements}}
 
+    {{#showcompetencies}}
+    <section class="local-completionpage__card local-completionpage__section local-completionpage__section--competencies">
+        <div class="local-completionpage__section-head local-completionpage__section-head--split">
+            <div class="local-completionpage__section-head-main">
+                <span class="local-completionpage__section-icon local-completionpage__section-icon--primary" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 3l7 4v5c0 5-3.5 8.5-7 9-3.5-.5-7-4-7-9V7l7-4z"/>
+                        <path d="M9.5 12.2l1.8 1.8 3.5-3.8"/>
+                    </svg>
+                </span>
+                <div>
+                    <h3 class="local-completionpage__section-title">{{competenciesheading}}</h3>
+                    <p class="local-completionpage__section-desc">{{competenciesdesc}}</p>
+                </div>
+            </div>
+            <a class="local-completionpage__btn local-completionpage__btn--ghost local-completionpage__btn--browse" href="{{competenciesviewallurl}}">
+                {{competenciesviewalllabel}}
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M5 12h14"/>
+                    <path d="M13 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </div>
+        <p class="local-completionpage__competencies-summary">{{competenciessummary}}</p>
+        <ul class="local-completionpage__competency-list">
+            {{#competencies}}
+            <li class="local-completionpage__competency-item{{#proficient}} local-completionpage__competency-item--proficient{{/proficient}}">
+                <div class="local-completionpage__competency-main">
+                    <div class="local-completionpage__competency-name">{{name}}</div>
+                    {{#hasidnumber}}
+                    <div class="local-completionpage__competency-id">{{idnumber}}</div>
+                    {{/hasidnumber}}
+                    {{#hasdescription}}
+                    <div class="local-completionpage__competency-desc">{{{descriptionhtml}}}</div>
+                    {{/hasdescription}}
+                    {{#hascourseoutcome}}
+                    <div class="local-completionpage__competency-source">{{coursesourcelabel}}</div>
+                    {{/hascourseoutcome}}
+                    {{#hasactivities}}
+                    <div class="local-completionpage__competency-activities">
+                        <div class="local-completionpage__competency-activities-label">{{activitieslabel}}</div>
+                        <ul class="local-completionpage__competency-activity-list">
+                            {{#activities}}
+                            <li>
+                                <a class="local-completionpage__competency-activity-link" href="{{url}}">{{name}}</a>
+                            </li>
+                            {{/activities}}
+                        </ul>
+                    </div>
+                    {{/hasactivities}}
+                </div>
+                <span class="local-completionpage__competency-status{{#proficient}} local-completionpage__competency-status--yes{{/proficient}}{{^proficient}} local-completionpage__competency-status--no{{/proficient}}">
+                    {{statuslabel}}
+                </span>
+            </li>
+            {{/competencies}}
+        </ul>
+    </section>
+    {{/showcompetencies}}
+
     {{#showfeedback}}
     <section class="local-completionpage__card local-completionpage__section local-completionpage__section--feedback">
         <div class="local-completionpage__section-head">

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="local/completionpage/db" VERSION="20250730" COMMENT="Course Completion Page per-course settings"
+<XMLDB PATH="local/completionpage/db" VERSION="20260924" COMMENT="Course Completion Page per-course settings"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd">
   <TABLES>
@@ -19,6 +19,7 @@
         <FIELD NAME="sectionsuggested" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="-1" SEQUENCE="false"/>
         <FIELD NAME="sectionexit" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="-1" SEQUENCE="false"/>
         <FIELD NAME="sectionachievements" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="-1" SEQUENCE="false"/>
+        <FIELD NAME="sectioncompetencies" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="-1" SEQUENCE="false"/>
         <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
       </FIELDS>
       <KEYS>

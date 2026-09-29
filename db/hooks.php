@@ -38,4 +38,12 @@ $callbacks = [
         'hook' => \core_course\hook\after_form_submission::class,
         'callback' => [\local_completionpage\hook_callbacks::class, 'after_form_submission'],
     ],
+    [
+        'hook' => \core_course\hook\before_course_viewed::class,
+        'callback' => [\local_completionpage\hook_callbacks::class, 'before_course_viewed'],
+    ],
+    [
+        'hook' => \core\hook\output\before_footer_html_generation::class,
+        'callback' => [\local_completionpage\hook_callbacks::class, 'before_footer_html_generation'],
+    ],
 ];

@@ -2,6 +2,44 @@
 
 All notable changes to the Course Completion Page plugin are documented here.
 
+## 1.3.6 - 2026-09-29
+
+### Fixed
+
+- Course banner "Open completion page" button keeps white label text (alert-info
+  link styles no longer override `.btn-primary`).
+
+## 1.3.5 - 2026-09-29
+
+### Changed
+
+- Course completion banner is shown at the top of the course page (not after
+  all sections), so learners see it without scrolling on long courses.
+
+## 1.3.4 - 2026-09-29
+
+### Added
+
+- Redirect completed learners to the completion page the next time they open
+  the course home (once per session). Uses Moodle course completion only — no
+  custom flag — so teacher resets/criteria changes stay consistent.
+- Course-page alert/CTA at the top of the course content linking back to
+  certificates, achievements, suggested courses, etc.
+- Site settings for redirect and course banner; per-course redirect override.
+
+### Changed
+
+- Removed drop shadows from section heading icons and action buttons on the
+  completion page.
+
+## 1.3.1 - 2026-09-24
+
+### Added
+
+- Competencies section lists visible linked activities under each competency
+  (same visibility rules as tool_lp), plus an “Also linked to course completion”
+  label when the course competency outcome is not “Do not include”.
+
 ## 1.2.32 - 2026-08-20
 
 ### Changed
