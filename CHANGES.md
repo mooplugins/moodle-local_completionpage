@@ -2,6 +2,13 @@
 
 All notable changes to the Course Completion Page plugin are documented here.
 
+## 1.3.7 - 2026-09-29
+
+### Fixed
+
+- CI: PSR-12 multi-line if formatting, line length, lang string ordering, and
+  stylelint `!important` on the course banner.
+
 ## 1.3.6 - 2026-09-29
 
 ### Fixed

@@ -431,9 +431,12 @@ require([], function() {
             return;
         }
         // Place at the top of course content so learners see it without scrolling.
-        const target = document.querySelector(
-            '#region-main .course-content, #region-main [data-region="course-content"], #region-main .course-content-container, #region-main'
-        );
+        const target = document.querySelector([
+            '#region-main .course-content',
+            '#region-main [data-region="course-content"]',
+            '#region-main .course-content-container',
+            '#region-main'
+        ].join(', '));
         if (!target) {
             return;
         }

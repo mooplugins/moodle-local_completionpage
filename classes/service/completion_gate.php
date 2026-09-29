@@ -115,9 +115,11 @@ class completion_gate {
         }
 
         // Stay on a specific section view; only redirect from the course home.
-        if (optional_param('section', null, PARAM_INT) !== null
+        if (
+            optional_param('section', null, PARAM_INT) !== null
             || optional_param('sectionid', 0, PARAM_INT)
-            || optional_param('edit', -1, PARAM_INT) === 1) {
+            || optional_param('edit', -1, PARAM_INT) === 1
+        ) {
             return false;
         }
 

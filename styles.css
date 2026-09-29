@@ -1182,6 +1182,10 @@ body.path-local-completionpage .local-completionpage a.local-completionpage__exi
     color: var(--ccp-text, #111827);
 }
 
+.local-completionpage-course-banner__inner {
+    align-items: center;
+}
+
 .local-completionpage-course-banner__heading {
     font-size: 1.05rem;
     margin-bottom: 0.15rem;
@@ -1231,7 +1235,7 @@ body.path-local-completionpage .local-completionpage a.local-completionpage__exi
 
     .local-completionpage-course-banner__inner {
         flex-direction: column;
-        align-items: stretch !important;
+        align-items: stretch;
     }
 
     .local-completionpage-course-banner__btn {
