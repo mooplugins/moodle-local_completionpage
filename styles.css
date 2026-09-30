@@ -1,6 +1,8 @@
 /* Course Completion Page — mockup-aligned layout */
 
-.local-completionpage {
+/* Shared tokens for the completion page and the course-home banner. */
+.local-completionpage,
+.local-completionpage-course-banner {
     --ccp-primary: var(--primary, var(--bs-primary, #0f6cbf));
     --ccp-primary-hover: color-mix(in srgb, var(--ccp-primary) 82%, #000);
     --ccp-primary-soft: color-mix(in srgb, var(--ccp-primary) 12%, #fff);
@@ -13,7 +15,9 @@
     --ccp-border: #e5e7eb;
     --ccp-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
     --ccp-radius: 18px;
+}
 
+.local-completionpage {
     max-width: 1080px;
     margin: 0 auto 2rem;
     color: var(--ccp-text);
@@ -1174,12 +1178,13 @@ body.path-local-completionpage .local-completionpage a.local-completionpage__exi
     line-height: 1;
 }
 
-/* Course home CTA for completed learners */
+/* Course home CTA for completed learners — same --ccp-* tokens as the page. */
 .local-completionpage-course-banner {
     border-radius: 12px;
-    border-color: var(--ccp-primary-border, #bfdbfe);
-    background: var(--ccp-primary-soft, #eff6ff);
-    color: var(--ccp-text, #111827);
+    border: 1px solid var(--ccp-primary-border);
+    background: var(--ccp-primary-soft);
+    color: var(--ccp-text);
+    padding: 1rem 1.15rem;
 }
 
 .local-completionpage-course-banner__inner {
@@ -1189,21 +1194,28 @@ body.path-local-completionpage .local-completionpage a.local-completionpage__exi
 .local-completionpage-course-banner__heading {
     font-size: 1.05rem;
     margin-bottom: 0.15rem;
+    color: var(--ccp-text);
 }
 
 .local-completionpage-course-banner__message {
-    color: var(--ccp-muted, #4b5563);
+    color: var(--ccp-muted);
     font-size: 0.95rem;
     line-height: 1.4;
 }
 
-/* Keep primary CTA readable inside alert-info (theme link color would otherwise win). */
 .local-completionpage-course-banner a.local-completionpage-course-banner__btn,
-.local-completionpage-course-banner a.local-completionpage-course-banner__btn:visited,
-.local-completionpage-course-banner a.local-completionpage-course-banner__btn:hover,
-.local-completionpage-course-banner a.local-completionpage-course-banner__btn:focus {
+.local-completionpage-course-banner a.local-completionpage-course-banner__btn:visited {
+    background: var(--ccp-primary);
+    border-color: var(--ccp-primary);
     color: #fff;
     white-space: nowrap;
+}
+
+.local-completionpage-course-banner a.local-completionpage-course-banner__btn:hover,
+.local-completionpage-course-banner a.local-completionpage-course-banner__btn:focus {
+    background: var(--ccp-primary-hover);
+    border-color: var(--ccp-primary-hover);
+    color: #fff;
 }
 
 @media (max-width: 767.98px) {

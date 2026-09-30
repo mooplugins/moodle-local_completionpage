@@ -2,6 +2,13 @@
 
 All notable changes to the Course Completion Page plugin are documented here.
 
+## 1.3.8 - 2026-09-30
+
+### Fixed
+
+- Course banner uses the same `--ccp-*` colour tokens as the completion page
+  (no Bootstrap `alert-info` / `--bs-alert-*` colours).
+
 ## 1.3.7 - 2026-09-29
 
 ### Fixed
@@ -34,10 +41,21 @@ All notable changes to the Course Completion Page plugin are documented here.
   certificates, achievements, suggested courses, etc.
 - Site settings for redirect and course banner; per-course redirect override.
 
+## 1.3.3 - 2026-09-29
+
 ### Changed
 
 - Removed drop shadows from section heading icons and action buttons on the
-  completion page.
+  completion page (certificate download/preview and other CTA buttons).
+
+## 1.3.2 - 2026-09-24
+
+### Added
+
+- ScholarLMS plan soft-gate for the competencies section: when the plan
+  restricts competencies, the site/course setting is frozen with an
+  “Upgrade plan” pill, and the learner completion page omits the section.
+  Soft-detected via `local_slmsplanrestrictions` (no effect on plain Moodle).
 
 ## 1.3.1 - 2026-09-24
 
