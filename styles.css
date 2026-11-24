@@ -3,18 +3,35 @@
 /* Shared tokens for the completion page and the course-home banner. */
 .local-completionpage,
 .local-completionpage-course-banner {
+    --ccp-on-primary: var(--white, #fff);
+    --ccp-card: var(--white, #fff);
     --ccp-primary: var(--primary, var(--bs-primary, #0f6cbf));
     --ccp-primary-hover: color-mix(in srgb, var(--ccp-primary) 82%, #000);
-    --ccp-primary-soft: color-mix(in srgb, var(--ccp-primary) 12%, #fff);
-    --ccp-primary-border: color-mix(in srgb, var(--ccp-primary) 28%, #fff);
-    --ccp-bg: #f3f5f8;
-    --ccp-surface: #f3f4f6;
-    --ccp-card: #fff;
-    --ccp-text: #1f2937;
-    --ccp-muted: #6b7280;
-    --ccp-border: #e5e7eb;
+    --ccp-primary-soft: color-mix(in srgb, var(--ccp-primary) 12%, var(--ccp-card));
+    --ccp-primary-border: color-mix(in srgb, var(--ccp-primary) 28%, var(--ccp-card));
+    --ccp-text: var(--defaultblacktext, #1f2937);
+    --ccp-heading: var(--defaultblacktext, #111827);
+    --ccp-muted: var(--graytext, #6b7280);
+    --ccp-border: var(--defaultborder, #e5e7eb);
+    --ccp-border-strong: var(--defaultborder, #d1d5db);
+    --ccp-border-hover: var(--gray-400, #cbd5e1);
+    --ccp-border-strong-hover: var(--gray-500, #9ca3af);
+    --ccp-bg: var(--cloudwhite, #f3f5f8);
+    --ccp-surface: var(--gray-100, #f3f4f6);
+    --ccp-surface-hover: var(--gray-100, #f9fafb);
+    --ccp-placeholder: var(--pggray, #f6f6f6);
+    --ccp-success-text: var(--lblgreentxt, #166534);
+    --ccp-success-bg: var(--lblgreenbg, #d1fae5);
+    --ccp-success-border: var(--lblgreentxt, #14b8a6);
+    --ccp-warning-text: var(--warning-outline, #92400e);
+    --ccp-warning-bg: var(--yellowlight, rgba(245, 158, 11, 0.15));
+    --ccp-danger-text: var(--lblredtxt, #1f2937);
+    --ccp-danger-bg: var(--lblredbg, #fee2e2);
+    --ccp-danger-border: var(--lblredtxt, #f87171);
     --ccp-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
     --ccp-radius: 18px;
+    --ccp-card-border: var(--universalborder, 1px solid var(--ccp-border));
+    --ccp-card-radius: var(--universalborderradius, 8px);
 }
 
 .local-completionpage {
@@ -80,7 +97,7 @@ body.local-completionpage-page #page-header .page-header-headings h1 {
     margin: 0 0 0.45rem;
     font-size: 2.25rem;
     font-weight: 800;
-    color: #111827;
+    color: var(--ccp-heading);
     letter-spacing: -0.02em;
     line-height: 1.15;
 }
@@ -100,7 +117,7 @@ body.local-completionpage-page #page-header .page-header-headings h1 {
 
 .local-completionpage__subtitle {
     margin: 0 0 1.15rem;
-    color: #6b7280;
+    color: var(--ccp-muted);
     font-size: 1.05rem;
     line-height: 1.45;
 }
@@ -117,7 +134,7 @@ body.local-completionpage-page #page-header .page-header-headings h1 {
     gap: 0;
     margin-bottom: 1rem;
     background: var(--ccp-surface);
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--ccp-border);
     border-radius: 14px;
     overflow: hidden;
 }
@@ -133,7 +150,7 @@ body.local-completionpage-page #page-header .page-header-headings h1 {
 
 .local-completionpage__meta-divider {
     width: 1px;
-    background: #d1d5db;
+    background: var(--ccp-border-strong);
     align-self: stretch;
     flex: 0 0 1px;
 }
@@ -168,7 +185,7 @@ body.local-completionpage-page #page-header .page-header-headings h1 {
 }
 
 .local-completionpage__meta-label {
-    color: #6b7280;
+    color: var(--ccp-muted);
     font-size: 0.8rem;
     margin-bottom: 0.2rem;
 }
@@ -176,7 +193,7 @@ body.local-completionpage-page #page-header .page-header-headings h1 {
 .local-completionpage__meta-value {
     font-weight: 750;
     line-height: 1.3;
-    color: #111827;
+    color: var(--ccp-heading);
 }
 
 .local-completionpage__requirements {
@@ -254,7 +271,7 @@ body.local-completionpage-page #page-header .page-header-headings h1 {
     align-items: center;
     justify-content: center;
     flex: 0 0 auto;
-    color: #fff;
+    color: var(--ccp-on-primary);
 }
 
 .local-completionpage__section-icon--primary {
@@ -297,25 +314,25 @@ body.path-local-completionpage .local-completionpage a.local-completionpage__btn
 body.path-local-completionpage .local-completionpage a.local-completionpage__btn--primary,
 body.path-local-completionpage .local-completionpage a.local-completionpage__btn--primary:visited {
     background: var(--ccp-primary);
-    color: #fff;
+    color: var(--ccp-on-primary);
 }
 
 body.path-local-completionpage .local-completionpage a.local-completionpage__btn--primary:hover,
 body.path-local-completionpage .local-completionpage a.local-completionpage__btn--primary:focus {
     background: var(--ccp-primary-hover);
-    color: #fff;
+    color: var(--ccp-on-primary);
 }
 
 body.path-local-completionpage .local-completionpage a.local-completionpage__btn--ghost,
 body.path-local-completionpage .local-completionpage a.local-completionpage__btn--ghost:visited {
-    background: #fff;
+    background: var(--ccp-card);
     color: var(--ccp-text);
     border-color: var(--ccp-border);
 }
 
 body.path-local-completionpage .local-completionpage a.local-completionpage__btn--ghost:hover,
 body.path-local-completionpage .local-completionpage a.local-completionpage__btn--ghost:focus {
-    border-color: #cbd5e1;
+    border-color: var(--ccp-border-hover);
     color: var(--ccp-text);
 }
 
@@ -331,7 +348,7 @@ body.path-local-completionpage .local-completionpage a.local-completionpage__btn
 .local-completionpage__section--certificates .local-completionpage__section-title {
     font-size: 1.3rem;
     font-weight: 800;
-    color: #111827;
+    color: var(--ccp-heading);
 }
 
 .local-completionpage__cert-stack {
@@ -368,16 +385,16 @@ body.path-local-completionpage .local-completionpage a.local-completionpage__btn
     padding: 0.72rem 0.85rem;
     border-radius: 10px;
     font-size: 0.92rem;
-    border-color: #d1d5db;
-    color: #111827;
-    background: #fff;
+    border-color: var(--ccp-border-strong);
+    color: var(--ccp-heading);
+    background: var(--ccp-card);
 }
 
 body.path-local-completionpage .local-completionpage a.local-completionpage__btn--preview:hover,
 body.path-local-completionpage .local-completionpage a.local-completionpage__btn--preview:focus {
-    border-color: #9ca3af;
-    background: #f9fafb;
-    color: #111827;
+    border-color: var(--ccp-border-strong-hover);
+    background: var(--ccp-surface-hover);
+    color: var(--ccp-heading);
 }
 
 .local-completionpage__cert-share {
@@ -390,23 +407,23 @@ body.path-local-completionpage .local-completionpage a.local-completionpage__btn
     justify-content: center;
     padding: 0.72rem 0.95rem;
     border-radius: 10px;
-    border-color: #d1d5db;
-    color: #111827;
-    background: #fff;
+    border-color: var(--ccp-border-strong);
+    color: var(--ccp-heading);
+    background: var(--ccp-card);
     font-size: 0.92rem;
 }
 
 body.path-local-completionpage .local-completionpage a.local-completionpage__btn--share:hover,
 body.path-local-completionpage .local-completionpage a.local-completionpage__btn--share:focus {
-    border-color: #9ca3af;
-    background: #f9fafb;
-    color: #111827;
+    border-color: var(--ccp-border-strong-hover);
+    background: var(--ccp-surface-hover);
+    color: var(--ccp-heading);
 }
 
 .local-completionpage__btn--share.dropdown-toggle::after {
     margin-left: 0.45rem;
     vertical-align: 0.15em;
-    border-top-color: #4b5563;
+    border-top-color: var(--ccp-muted);
 }
 
 .local-completionpage__cert-preview-wrap {
@@ -420,21 +437,21 @@ body.path-local-completionpage .local-completionpage a.local-completionpage__btn
     width: 100%;
     max-width: 440px;
     aspect-ratio: 1.35 / 1;
-    background: #fff;
+    background: var(--ccp-card);
     border-radius: 16px;
     box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
     padding: 0.85rem;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--ccp-border);
 }
 
 .local-completionpage__cert-preview--pdf {
     position: relative;
     padding: 10px;
     overflow: hidden;
-    background: linear-gradient(180deg, #f8fafc 0%, #fff 100%);
+    background: linear-gradient(180deg, var(--ccp-surface) 0%, var(--ccp-card) 100%);
     aspect-ratio: 1.38 / 1;
     max-width: 460px;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--ccp-border);
     border-radius: 16px;
     box-shadow: 0 14px 32px rgba(15, 23, 42, 0.1);
 }
@@ -455,7 +472,7 @@ body.path-local-completionpage .local-completionpage a.local-completionpage__btn
     height: 100%;
     border-radius: 10px;
     overflow: hidden;
-    background: #f1f5f9;
+    background: var(--ccp-surface);
     position: relative;
     z-index: 0;
     isolation: isolate;
@@ -472,7 +489,7 @@ body.path-local-completionpage .local-completionpage a.local-completionpage__btn
     height: 112%;
     border: 0;
     display: block;
-    background: #f8fafc;
+    background: var(--ccp-surface);
     overflow: hidden;
     pointer-events: none;
     color-scheme: light;
@@ -480,7 +497,7 @@ body.path-local-completionpage .local-completionpage a.local-completionpage__btn
 
 .local-completionpage__cert-preview-border {
     height: 100%;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--ccp-border);
     border-radius: 10px;
     padding: 1rem 1.1rem;
     position: relative;
@@ -489,7 +506,7 @@ body.path-local-completionpage .local-completionpage a.local-completionpage__btn
     align-items: center;
     justify-content: center;
     text-align: center;
-    background: linear-gradient(180deg, #fff 0%, #f8fafc 100%);
+    background: linear-gradient(180deg, var(--ccp-card) 0%, var(--ccp-surface) 100%);
 }
 
 .local-completionpage__cert-preview-eyebrow {
@@ -497,7 +514,7 @@ body.path-local-completionpage .local-completionpage a.local-completionpage__btn
     font-weight: 800;
     letter-spacing: 0.04em;
     text-transform: uppercase;
-    color: #0f766e;
+    color: var(--ccp-primary);
     margin-bottom: 0.65rem;
 }
 
@@ -518,7 +535,7 @@ body.path-local-completionpage .local-completionpage a.local-completionpage__btn
 .local-completionpage__cert-preview-course {
     font-size: 0.9rem;
     font-weight: 650;
-    color: #334155;
+    color: var(--ccp-text);
     margin-bottom: 0.35rem;
 }
 
@@ -551,7 +568,7 @@ body.path-local-completionpage .local-completionpage a.local-completionpage__cer
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
-    color: #2563eb;
+    color: var(--ccp-primary);
     font-weight: 650;
     font-size: 0.92rem;
     text-decoration: none;
@@ -560,7 +577,7 @@ body.path-local-completionpage .local-completionpage a.local-completionpage__cer
 body.path-local-completionpage .local-completionpage a.local-completionpage__cert-preview-link:hover,
 body.path-local-completionpage .local-completionpage a.local-completionpage__cert-preview-link:focus {
     text-decoration: underline;
-    color: #2563eb;
+    color: var(--ccp-primary);
 }
 
 @media (max-width: 767.98px) {
@@ -580,7 +597,7 @@ body.path-local-completionpage .local-completionpage a.local-completionpage__cer
 
 /* Feedback — CTA opens the linked Feedback activity form */
 .local-completionpage__section--feedback {
-    background: #fff;
+    background: var(--ccp-card);
 }
 
 .local-completionpage__section--feedback .local-completionpage__section-icon--primary {
@@ -595,14 +612,14 @@ body.path-local-completionpage .local-completionpage a.local-completionpage__cer
 
 .local-completionpage__feedback-ctahint {
     margin: 0;
-    color: #4b5563;
+    color: var(--ccp-muted);
     font-size: 0.95rem;
     line-height: 1.45;
 }
 
 .local-completionpage__feedback-activity {
     margin: 0;
-    color: #374151;
+    color: var(--ccp-text);
     font-size: 0.9rem;
 }
 
@@ -623,12 +640,12 @@ body.path-local-completionpage .local-completionpage a.local-completionpage__cer
 /* Suggested course cards — self-contained styles. */
 .local-completionpage .learner_course_card {
     box-sizing: border-box;
-    border: 1px solid var(--ccp-border);
-    border-radius: 8px;
+    border: var(--ccp-card-border);
+    border-radius: var(--ccp-card-radius);
     padding: 10px;
     display: flex;
     flex-direction: column;
-    background: #fff;
+    background: var(--ccp-card);
 }
 
 .local-completionpage .learner_course_card:hover {
@@ -640,7 +657,7 @@ body.path-local-completionpage .local-completionpage a.local-completionpage__cer
     flex-direction: column;
     flex-grow: 1;
     height: 100%;
-    background: #fff;
+    background: var(--ccp-card);
     border-radius: 8px;
 }
 
@@ -649,7 +666,7 @@ body.path-local-completionpage .local-completionpage a.local-completionpage__cer
     width: 100%;
     aspect-ratio: 16 / 9;
     overflow: hidden;
-    background: #f6f6f6;
+    background: var(--ccp-placeholder);
 }
 
 .local-completionpage .learner_course_card_img img {
@@ -665,7 +682,7 @@ body.path-local-completionpage .local-completionpage a.local-completionpage__cer
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #f6f6f6;
+    background-color: var(--ccp-placeholder);
 }
 
 .local-completionpage .learner_course_card_img.frontpage-course-img-empty img.local-completionpage__course-placeholder-icon {
@@ -741,17 +758,17 @@ body.path-local-completionpage .local-completionpage a.local-completionpage__cer
 
 .local-completionpage .have_access,
 .local-completionpage .text-bg-green {
-    color: #1f2937;
-    border: 1px solid #14b8a6;
-    background-color: #d1fae5;
+    color: var(--lblgreentxt, var(--ccp-text));
+    border: 1px solid var(--ccp-success-border);
+    background-color: var(--ccp-success-bg);
     padding: 5px 10px;
 }
 
 .local-completionpage .have_expiry,
 .local-completionpage .text-bg-red {
-    color: #1f2937;
-    border: 1px solid #f87171;
-    background-color: #fee2e2;
+    color: var(--ccp-danger-text);
+    border: 1px solid var(--ccp-danger-border);
+    background-color: var(--ccp-danger-bg);
     padding: 5px 10px;
 }
 
@@ -762,7 +779,7 @@ body.path-local-completionpage .local-completionpage button.btn.btn-course-card 
     justify-content: center;
     gap: 0.25rem;
     border: 1px solid var(--ccp-primary);
-    color: #fff;
+    color: var(--ccp-on-primary);
     background-color: var(--ccp-primary);
     border-radius: 8px;
     font-weight: 600;
@@ -779,7 +796,7 @@ body.path-local-completionpage .local-completionpage button.btn.btn-course-card:
 body.path-local-completionpage .local-completionpage button.btn.btn-course-card:focus {
     background-color: var(--ccp-primary-hover);
     border-color: var(--ccp-primary-hover);
-    color: #fff;
+    color: var(--ccp-on-primary);
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
@@ -809,8 +826,8 @@ body.path-local-completionpage .local-completionpage button.btn.btn-course-card:
     flex: 0 0 calc((100% - 40px) / 3);
     width: auto;
     max-width: none;
-    border: var(--universalborder, 1px solid #e5e7eb);
-    border-radius: var(--universalborderradius, 8px);
+    border: var(--ccp-card-border);
+    border-radius: var(--ccp-card-radius);
     padding: 10px;
     display: flex;
     flex-direction: column;
@@ -845,9 +862,13 @@ body.path-local-completionpage .local-completionpage button.btn.btn-course-card:
 body.path-local-completionpage .local-completionpage a.local-completionpage__btn--browse,
 body.path-local-completionpage .local-completionpage a.local-completionpage__btn--browse:visited {
     white-space: nowrap;
-    border-color: #d1d5db;
-    color: #111827;
     align-self: center;
+}
+
+body.path-local-completionpage .local-completionpage a.local-completionpage__btn--ghost.local-completionpage__btn--browse,
+body.path-local-completionpage .local-completionpage a.local-completionpage__btn--ghost.local-completionpage__btn--browse:visited {
+    border-color: var(--ccp-border-strong);
+    color: var(--ccp-heading);
 }
 
 .local-completionpage__course-grid {
@@ -861,9 +882,9 @@ body.path-local-completionpage .local-completionpage a.local-completionpage__btn
     flex-direction: row;
     align-items: stretch;
     gap: 0.95rem;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--ccp-border);
     border-radius: 14px;
-    background: #fff;
+    background: var(--ccp-card);
     padding: 0.95rem;
     transition: transform 0.15s ease, box-shadow 0.15s ease;
     min-width: 0;
@@ -880,7 +901,7 @@ body.path-local-completionpage .local-completionpage a.local-completionpage__btn
     border-radius: 14px;
     overflow: hidden;
     flex: 0 0 84px;
-    color: #fff;
+    color: var(--ccp-on-primary);
     background: var(--ccp-primary);
 }
 
@@ -898,7 +919,7 @@ body.path-local-completionpage .local-completionpage a.local-completionpage__btn
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #fff;
+    color: var(--ccp-on-primary);
 }
 
 .local-completionpage__course-body {
@@ -913,11 +934,11 @@ body.path-local-completionpage .local-completionpage a.local-completionpage__btn
     font-size: 1.02rem;
     font-weight: 800;
     line-height: 1.3;
-    color: #111827;
+    color: var(--ccp-heading);
 }
 
 .local-completionpage__course-summary {
-    color: #6b7280;
+    color: var(--ccp-muted);
     font-size: 0.84rem;
     line-height: 1.4;
     margin-bottom: 0.55rem;
@@ -980,7 +1001,7 @@ body.path-local-completionpage .local-completionpage a.local-completionpage__cou
 .local-completionpage__competencies-summary {
     margin: 0 0 1rem;
     font-weight: 600;
-    color: var(--ccp-text-muted, #64748b);
+    color: var(--ccp-muted);
 }
 
 .local-completionpage__competency-list {
@@ -998,14 +1019,14 @@ body.path-local-completionpage .local-completionpage a.local-completionpage__cou
     justify-content: space-between;
     gap: 1rem;
     padding: 0.9rem 1rem;
-    border: 1px solid var(--ccp-border, #e2e8f0);
+    border: 1px solid var(--ccp-border);
     border-radius: 14px;
-    background: var(--ccp-surface, #fff);
+    background: var(--ccp-surface);
 }
 
 .local-completionpage__competency-item--proficient {
-    border-color: rgba(22, 163, 74, 0.35);
-    background: rgba(22, 163, 74, 0.04);
+    border-color: color-mix(in srgb, var(--ccp-success-text) 35%, transparent);
+    background: color-mix(in srgb, var(--ccp-success-text) 4%, transparent);
 }
 
 .local-completionpage__competency-name {
@@ -1015,13 +1036,13 @@ body.path-local-completionpage .local-completionpage a.local-completionpage__cou
 .local-completionpage__competency-id {
     margin-top: 0.15rem;
     font-size: 0.85rem;
-    color: var(--ccp-text-muted, #64748b);
+    color: var(--ccp-muted);
 }
 
 .local-completionpage__competency-desc {
     margin-top: 0.35rem;
     font-size: 0.9rem;
-    color: var(--ccp-text-muted, #64748b);
+    color: var(--ccp-muted);
 }
 
 .local-completionpage__competency-desc p:last-child {
@@ -1032,7 +1053,7 @@ body.path-local-completionpage .local-completionpage a.local-completionpage__cou
     margin-top: 0.45rem;
     font-size: 0.8rem;
     font-weight: 600;
-    color: var(--ccp-text-muted, #64748b);
+    color: var(--ccp-muted);
 }
 
 .local-completionpage__competency-activities {
@@ -1042,7 +1063,7 @@ body.path-local-completionpage .local-completionpage a.local-completionpage__cou
 .local-completionpage__competency-activities-label {
     font-size: 0.8rem;
     font-weight: 700;
-    color: var(--ccp-text-muted, #64748b);
+    color: var(--ccp-muted);
     margin-bottom: 0.25rem;
 }
 
@@ -1058,7 +1079,7 @@ body.path-local-completionpage .local-completionpage a.local-completionpage__cou
 .local-completionpage__competency-activity-link {
     font-size: 0.88rem;
     font-weight: 600;
-    color: var(--ccp-primary, #0d6efd);
+    color: var(--ccp-primary);
     text-decoration: none;
 }
 
@@ -1077,13 +1098,13 @@ body.path-local-completionpage .local-completionpage a.local-completionpage__cou
 }
 
 .local-completionpage__competency-status--yes {
-    color: #166534;
-    background: rgba(22, 163, 74, 0.15);
+    color: var(--ccp-success-text);
+    background: color-mix(in srgb, var(--ccp-success-text) 15%, transparent);
 }
 
 .local-completionpage__competency-status--no {
-    color: #92400e;
-    background: rgba(245, 158, 11, 0.15);
+    color: var(--ccp-warning-text);
+    background: var(--ccp-warning-bg);
 }
 
 @media (max-width: 640px) {
@@ -1113,8 +1134,8 @@ body.path-local-completionpage .local-completionpage a.local-completionpage__exi
     gap: 0.85rem;
     padding: 1.05rem 1.1rem;
     border-radius: 14px;
-    background: #fff;
-    border: 1px solid #e5e7eb;
+    background: var(--ccp-card);
+    border: 1px solid var(--ccp-border);
     box-shadow: var(--ccp-shadow);
     text-decoration: none;
     color: inherit;
@@ -1142,13 +1163,13 @@ body.path-local-completionpage .local-completionpage a.local-completionpage__exi
 .local-completionpage__exit-title {
     display: block;
     font-weight: 800;
-    color: #111827;
+    color: var(--ccp-heading);
     font-size: 0.98rem;
 }
 
 .local-completionpage__exit-desc {
     display: block;
-    color: #6b7280;
+    color: var(--ccp-muted);
     font-size: 0.84rem;
     margin-top: 0.1rem;
 }
@@ -1207,7 +1228,7 @@ body.path-local-completionpage .local-completionpage a.local-completionpage__exi
 .local-completionpage-course-banner a.local-completionpage-course-banner__btn:visited {
     background: var(--ccp-primary);
     border-color: var(--ccp-primary);
-    color: #fff;
+    color: var(--ccp-on-primary);
     white-space: nowrap;
 }
 
@@ -1215,7 +1236,7 @@ body.path-local-completionpage .local-completionpage a.local-completionpage__exi
 .local-completionpage-course-banner a.local-completionpage-course-banner__btn:focus {
     background: var(--ccp-primary-hover);
     border-color: var(--ccp-primary-hover);
-    color: #fff;
+    color: var(--ccp-on-primary);
 }
 
 @media (max-width: 767.98px) {

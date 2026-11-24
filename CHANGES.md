@@ -2,6 +2,15 @@
 
 All notable changes to the Course Completion Page plugin are documented here.
 
+## 1.3.9 - 2026-11-24
+
+### Changed
+
+- “View course competencies” uses the secondary button style so the control has a hover state.
+- Completion page colours follow theme variables when the theme defines them
+  (borders, text, muted text, surfaces, and status colours) and fall back to
+  the plugin palette on plain Moodle.
+
 ## 1.3.8 - 2026-09-30
 
 ### Fixed
@@ -52,10 +61,10 @@ All notable changes to the Course Completion Page plugin are documented here.
 
 ### Added
 
-- ScholarLMS plan soft-gate for the competencies section: when the plan
-  restricts competencies, the site/course setting is frozen with an
-  “Upgrade plan” pill, and the learner completion page omits the section.
-  Soft-detected via `local_slmsplanrestrictions` (no effect on plain Moodle).
+- Optional soft-gate for the competencies section: when an external plugin
+  restricts competencies, the site and course settings are frozen with an
+  upgrade notice, and the learner completion page hides the section.
+  The check runs only when that plugin is installed, so plain Moodle is unchanged.
 
 ## 1.3.1 - 2026-09-24
 
