@@ -381,7 +381,7 @@ JS
     }
 
     /**
-     * Inject a course-page CTA for completed learners (placed after sections via JS).
+     * Inject a course-home CTA for completed learners (moved to the top of course content via JS).
      *
      * @param \core\hook\output\before_footer_html_generation $hook
      */
@@ -394,17 +394,25 @@ JS
             return;
         }
 
-        if ($PAGE->pagelayout !== 'course' && $PAGE->pagelayout !== 'incourse') {
-            return;
-        }
-
-        // Course home only — not activity pages.
-        if (!empty($PAGE->cm)) {
+        // Course home only. require_login() uses the incourse layout for activity
+        // pages and for other course screens (participants, reports, content bank).
+        if ($PAGE->pagelayout !== 'course') {
             return;
         }
 
         $course = !empty($COURSE->id) ? $COURSE : ($PAGE->course ?? null);
         if (empty($course->id) || (int) $course->id <= SITEID) {
+            return;
+        }
+
+        // Section pages share the course layout (pagetype course-view-section-*).
+        // Do not use empty($PAGE->cm): moodle_page exposes cm via __get and has no
+        // __isset, so empty() is always true and cannot tell activities apart.
+        if ($PAGE->pagetype !== 'course-view-' . $course->format) {
+            return;
+        }
+
+        if ($PAGE->context->contextlevel !== CONTEXT_COURSE) {
             return;
         }
 
@@ -434,8 +442,7 @@ require([], function() {
         const target = document.querySelector([
             '#region-main .course-content',
             '#region-main [data-region="course-content"]',
-            '#region-main .course-content-container',
-            '#region-main'
+            '#region-main .course-content-container'
         ].join(', '));
         if (!target) {
             return;

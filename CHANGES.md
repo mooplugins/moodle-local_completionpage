@@ -2,6 +2,14 @@
 
 All notable changes to the Course Completion Page plugin are documented here.
 
+## 1.3.10 - 2026-11-25
+
+### Fixed
+
+- Course completion banner stays on the course home. It was also shown on
+  activity pages and other in-course screens because `empty($PAGE->cm)` is
+  always true (`moodle_page` has no `__isset`).
+
 ## 1.3.9 - 2026-11-24
 
 ### Changed
