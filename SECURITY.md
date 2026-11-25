@@ -22,7 +22,7 @@ Security fixes are published on the latest release. Older releases in this line 
 
 | Version | Security fixes |
 | --- | --- |
-| 1.3.9 | Supported |
-| Older releases | Upgrade to 1.3.9 |
+| 1.3.10 | Supported |
+| Older releases | Upgrade to 1.3.10 |
 
 This release supports Moodle 4.5 through 5.2.
